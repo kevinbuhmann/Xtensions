@@ -1,4 +1,4 @@
-﻿namespace Xtensions.Tests
+﻿namespace Xtensions.Time.Tests
 {
     using System;
     using System.Collections.Generic;

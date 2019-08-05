@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Xtensions\Xtensions.csproj" />
+    <ProjectReference Include="..\..\src\Xtensions.Time\Xtensions.Time.csproj" />
   </ItemGroup>
   
 </Project>

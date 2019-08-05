@@ -1,4 +1,4 @@
-﻿namespace Xtensions
+﻿namespace Xtensions.Time
 {
     using System;
     using System.Threading;

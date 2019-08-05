@@ -11,8 +11,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageId>Xtensions</PackageId>
-    <Version>1.0.0</Version>
+    <PackageId>Xtensions.Time</PackageId>
+    <Version>0.0.1</Version>
     <Authors>Kevin Phelps</Authors>
     <RepositoryUrl>https://github.com/kevinphelps/Xtensions</RepositoryUrl>
     <PackageProjectUrl>https://github.com/kevinphelps/Xtensions</PackageProjectUrl>

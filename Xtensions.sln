@@ -13,11 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_rules", "_rules", "{5A9545
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A8984C63-D714-4493-86C9-A6E37E5D9BD3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xtensions", "src\Xtensions\Xtensions.csproj", "{D982CB6C-3598-48B9-840A-C7F31D941517}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xtensions.Time", "src\Xtensions.Time\Xtensions.Time.csproj", "{D982CB6C-3598-48B9-840A-C7F31D941517}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{30F5BED7-0ECD-48F3-9900-073330DA422B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xtensions.Tests", "tests\Xtensions.Tests\Xtensions.Tests.csproj", "{EC2A0F1B-4DAE-446E-944B-E5C99B5C815A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xtensions.Time.Tests", "tests\Xtensions.Time.Tests\Xtensions.Time.Tests.csproj", "{EC2A0F1B-4DAE-446E-944B-E5C99B5C815A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
