@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="test-rules" ToolsVersion="16.0">
+  <Include Path="all-rules.ruleset" Action="Error" />
+  <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
+    <Rule Id="CA1014" Action="None" />
+    <Rule Id="CA1707" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
+    <Rule Id="IDE0058" Action="None" />
+    <Rule Id="IDE0058WithoutSuggestion" Action="None" />
+    <Rule Id="IDE0065" Action="None" />
+    <Rule Id="IDE0065WithoutSuggestion" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.Features" RuleNamespace="Microsoft.CodeAnalysis.Features">
+    <Rule Id="IDE0058" Action="None" />
+    <Rule Id="IDE0058WithoutSuggestion" Action="None" />
+    <Rule Id="IDE0065" Action="None" />
+    <Rule Id="IDE0065WithoutSuggestion" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA0001" Action="None" />
+    <Rule Id="SA1600" Action="None" />
+    <Rule Id="SA1633" Action="None" />
+  </Rules>
+</RuleSet>
