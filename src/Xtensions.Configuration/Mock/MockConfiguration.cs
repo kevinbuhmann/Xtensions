@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using EnsureThat;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Primitives;
     using Newtonsoft.Json;
@@ -21,8 +22,10 @@
         /// Initializes a new instance of the <see cref="MockConfiguration"/> class.
         /// </summary>
         /// <param name="configurationData">The initial configuration data.</param>
-        public MockConfiguration(dynamic configurationData = null)
+        public MockConfiguration(dynamic configurationData)
         {
+            EnsureArg.IsNotNull(configurationData, nameof(configurationData));
+
             this.tempFilePath = Path.GetTempFileName();
             this.SetConfigurationData(configurationData);
 
@@ -92,9 +95,11 @@
                 throw new ObjectDisposedException("This mock configuration instance has been disposed.");
             }
 
+            EnsureArg.IsNotNull(configurationData, nameof(configurationData));
+
             File.WriteAllText(
                 path: this.tempFilePath,
-                contents: JsonConvert.SerializeObject(configurationData ?? new { }));
+                contents: JsonConvert.SerializeObject(configurationData));
 
             this.configuration?.Reload();
         }
