@@ -1,6 +1,5 @@
 ﻿namespace Xtensions.Configuration.Tests.Mock
 {
-    using System.Threading.Tasks;
     using Microsoft.Extensions.Configuration;
     using Xtensions.Configuration.Mock;
     using Xunit;
