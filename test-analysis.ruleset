@@ -7,6 +7,8 @@
     <Rule Id="CA1707" Action="None" />
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
+    <Rule Id="IDE0003" Action="None" />
+    <Rule Id="IDE0003WithoutSuggestion" Action="None" />
     <Rule Id="IDE0053" Action="None" />
     <Rule Id="IDE0053WithoutSuggestion" Action="None" />
     <Rule Id="IDE0058" Action="None" />
@@ -15,6 +17,8 @@
     <Rule Id="IDE0065WithoutSuggestion" Action="None" />
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.Features" RuleNamespace="Microsoft.CodeAnalysis.Features">
+    <Rule Id="IDE0003" Action="None" />
+    <Rule Id="IDE0003WithoutSuggestion" Action="None" />
     <Rule Id="IDE0053" Action="None" />
     <Rule Id="IDE0053WithoutSuggestion" Action="None" />
     <Rule Id="IDE0058" Action="None" />
