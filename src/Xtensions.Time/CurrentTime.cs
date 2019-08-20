@@ -30,7 +30,7 @@
         /// Sets the mock UTC time to the given value for the current async context.
         /// </summary>
         /// <param name="mockUtcNow">The mock UTC time to use for the current async context.</param>
-        /// <returns>An instance of <see cref="CurrentTime" />. Dispose to return the current async context to current time.</returns>
+        /// <returns>An instance of <see cref="CurrentTime"/>. Dispose to return the current async context to current time.</returns>
         public static CurrentTime UseMockUtcNow(DateTime mockUtcNow)
         {
             return new CurrentTime(mockUtcNow);

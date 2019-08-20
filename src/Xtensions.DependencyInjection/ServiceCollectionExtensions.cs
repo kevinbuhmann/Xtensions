@@ -8,18 +8,18 @@
     using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
-    /// Extension methods for adding services to an <see cref="IServiceCollection" />.
+    /// Extension methods for adding services to an <see cref="IServiceCollection"/>.
     /// </summary>
     public static class ServiceCollectionExtensions
     {
         /// <summary>
         /// Adds a singleton service of the type specified in TService with an implementation
         /// type specified in TImplementation using the custom dependencies specified in
-        /// customDependenciesFactory to the specified <see cref="IServiceCollection" />.
+        /// customDependenciesFactory to the specified <see cref="IServiceCollection"/>.
         /// </summary>
         /// <typeparam name="TService">The type of the service to add.</typeparam>
         /// <typeparam name="TImplementation">The type of the implementation to use.</typeparam>
-        /// <param name="services">The <see cref="IServiceCollection" /> to add the service to.</param>
+        /// <param name="services">The <see cref="IServiceCollection"/> to add the service to.</param>
         /// <param name="customDependenciesFactory">The factory that creates the custom dependencies.</param>
         /// <returns>A reference to this instance after the operation has completed.</returns>
         public static IServiceCollection AddSingletonWithCustomDependencies<TService, TImplementation>(
