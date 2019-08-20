@@ -40,7 +40,7 @@
             {
                 for (int i = 0; i < 100; ++i)
                 {
-                    await Task.Delay(1).ConfigureAwait(false);
+                    await Task.Delay(1);
                     Assert.Equal(actual: CurrentTime.UtcNow, expected: mockUtcNow);
                 }
             }
@@ -74,13 +74,13 @@
                 {
                     for (int i = 0; i < 100; ++i)
                     {
-                        await Task.Delay(1).ConfigureAwait(false);
+                        await Task.Delay(1);
                         Assert.Equal(actual: CurrentTime.UtcNow, expected: mockUtcNow);
                     }
                 }
             });
 
-            await Task.WhenAll(tasks).ConfigureAwait(false);
+            await Task.WhenAll(tasks);
         }
 
         [Fact]

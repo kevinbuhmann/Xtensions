@@ -5,6 +5,7 @@
     <Rule Id="CA1014" Action="None" />
     <Rule Id="CA1508" Action="None" />
     <Rule Id="CA1707" Action="None" />
+    <Rule Id="CA2007" Action="None" />
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
     <Rule Id="IDE0003" Action="None" />
