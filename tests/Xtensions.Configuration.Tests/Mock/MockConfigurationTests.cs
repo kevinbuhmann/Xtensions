@@ -48,7 +48,7 @@
 
             using (MockConfiguration configuration = new MockConfiguration(configurationData))
             {
-                Assert.Equal(actual: configuration["Key2"], expected: null);
+                Assert.Null(configuration["Key2"]);
             }
         }
 
@@ -65,7 +65,7 @@
 
             using (MockConfiguration configuration = new MockConfiguration(configurationData))
             {
-                Assert.Equal(actual: configuration["Key"], expected: null);
+                Assert.Null(configuration["Key"]);
             }
         }
 
