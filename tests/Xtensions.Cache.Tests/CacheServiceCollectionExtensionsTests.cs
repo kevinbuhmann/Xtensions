@@ -5,7 +5,7 @@
     using Xtensions.Cache.Tests.TestServices;
     using Xunit;
 
-    public class CachingServiceCollectionExtensionsTests
+    public class CacheServiceCollectionExtensionsTests
     {
         [Fact]
         public void AddSingletonWithCache_CacheNotRegistered_InjectsTheGivenCache()
