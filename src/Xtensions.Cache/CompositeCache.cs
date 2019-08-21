@@ -19,19 +19,19 @@
         {
             EnsureArg.IsNotNull(sourceCaches, nameof(sourceCaches));
 
-            List<ICache> innerCacheList = sourceCaches.ToList();
+            List<ICache> sourceCachesList = sourceCaches.ToList();
 
             EnsureArg.IsTrue(
-                value: innerCacheList.Count > 1,
+                value: sourceCachesList.Count > 1,
                 paramName: nameof(sourceCaches),
                 optsFn: opts => opts.WithMessage($"{nameof(CompositeCache)} requires at least two source caches."));
 
             EnsureArg.IsTrue(
-                value: innerCacheList.Count == innerCacheList.Distinct().Count(),
+                value: sourceCachesList.Count == sourceCachesList.Distinct().Count(),
                 paramName: nameof(sourceCaches),
                 optsFn: opts => opts.WithMessage($"{nameof(CompositeCache)} requires at least distinct two source caches."));
 
-            this.SourceCaches = innerCacheList;
+            this.SourceCaches = sourceCachesList;
         }
 
         /// <summary>
