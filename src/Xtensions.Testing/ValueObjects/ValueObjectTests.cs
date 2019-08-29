@@ -10,10 +10,10 @@
     /// Provides equality, inequality, hash code, and serialization tests for value objects.
     /// </summary>
     /// <typeparam name="TValueObject">The type of the value object.</typeparam>
-    /// <typeparam name="TValueObjectTestCases">The type that implements <see cref="IValueObjectTestCases{TValueObject}"/>.</typeparam>
+    /// <typeparam name="TValueObjectTestCases">A concrete implementation of <see cref="ValueObjectTestCases{TValueObject}"/>.</typeparam>
     public abstract class ValueObjectTests<TValueObject, TValueObjectTestCases>
         where TValueObject : ValueObject
-        where TValueObjectTestCases : IValueObjectTestCases<TValueObject>, new()
+        where TValueObjectTestCases : ValueObjectTestCases<TValueObject>, new()
     {
 #pragma warning disable CA1000 // Do not declare static members on generic types
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -21,14 +21,14 @@
         private static readonly TValueObjectTestCases ValueObjectTestCases = new TValueObjectTestCases();
 
         public static IEnumerable<object[]> EqualPairsValueObjectData { get; } = ValueObjectTestCases.GetPermutatedEqualPairs()
-            .Select(pair => new object[] { pair.left, pair.right })
+            .Select(pair => pair.ToObjectArray())
             .ToList();
 
         public static IEnumerable<object[]> NotEqualPairsValueObjectData { get; } = ValueObjectTestCases.GetPermutatedNotEqualPairs()
-            .Select(pair => new object[] { pair.left, pair.right })
+            .Select(pair => pair.ToObjectArray())
             .ToList();
 
-        public static IEnumerable<object[]> ValueObjectData { get; } = ValueObjectTestCases.GetNotEqualValues()
+        public static IEnumerable<object[]> ValueObjectData { get; } = ValueObjectTestCases.GetDistinctValues()
             .Select(value => new object[] { value })
             .ToList();
 #pragma warning restore CA1000 // Do not declare static members on generic types
@@ -157,13 +157,6 @@
             Assert.Equal(
                 expected: value,
                 actual: JsonConvert.DeserializeObject<TValueObject>(JsonConvert.SerializeObject(value)));
-        }
-
-        [Theory]
-        [MemberData(nameof(EqualPairsValueObjectData))]
-        public void TestCaseVerification_GetEqualPairs_NoPairConsistsOfSameReference(TValueObject left, TValueObject right)
-        {
-            Assert.False(ReferenceEquals(left, right));
         }
 #pragma warning restore SA1600 // Elements should be documented
 #pragma warning restore CA1707 // Identifiers should not contain underscores
