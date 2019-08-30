@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Xtensions.Testing.Tests.ValueObjects.TestObjects;
     using Xtensions.Testing.ValueObjects;
     using Xunit;
 

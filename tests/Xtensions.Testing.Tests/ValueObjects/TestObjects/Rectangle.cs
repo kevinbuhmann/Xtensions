@@ -1,4 +1,4 @@
-﻿namespace Xtensions.Testing.Tests.ValueObjects
+﻿namespace Xtensions.Testing.Tests.ValueObjects.TestObjects
 {
     using System.Collections.Generic;
     using CSharpFunctionalExtensions;
