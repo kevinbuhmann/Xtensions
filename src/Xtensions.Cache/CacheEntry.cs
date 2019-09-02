@@ -1,12 +1,14 @@
 ﻿namespace Xtensions.Cache
 {
     using System;
+    using System.Collections.Generic;
+    using CSharpFunctionalExtensions;
 
     /// <summary>
     /// Represents an entry that is stored in cache.
     /// </summary>
     /// <typeparam name="T">The type of the value that is cached.</typeparam>
-    public class CacheEntry<T>
+    public class CacheEntry<T> : ValueObject
         where T : class
     {
         /// <summary>
@@ -35,5 +37,14 @@
         /// The absolute expiration.
         /// </value>
         public DateTime AbsoluteExpiration { get; }
+
+        /// <summary>
+        /// Gets the values to check when determining if two instances are equal.
+        /// </summary>
+        /// <returns>The values to check when determining if two instances are equal.</returns>
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            return new object[] { this.Value, this.AbsoluteExpiration };
+        }
     }
 }

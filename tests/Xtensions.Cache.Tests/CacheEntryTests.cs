@@ -1,9 +1,10 @@
 ﻿namespace Xtensions.Cache.Tests
 {
     using System;
+    using Xtensions.Testing.ValueObjects;
     using Xunit;
 
-    public class CacheEntryTests
+    public class CacheEntryTests : ValueObjectTests<CacheEntry<string>, CacheEntryValueObjectTestCases>
     {
         [Fact]
         public void Constructor_PopulatesProperties()
