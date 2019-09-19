@@ -1,21 +1,21 @@
 ﻿namespace Xtensions.Testing.Tests.ValueObjects.TestObjects
 {
     using System;
-    using System.Collections.Generic;
+    using System.Linq.Expressions;
     using Xtensions.Testing.ValueObjects;
 
     public class RectangleValueObjectTestCases : ValueObjectTestCases<Rectangle>
     {
-        public override IEnumerable<Func<Rectangle>> GetDistinctValueFactories()
+        public override FactoryExpressionCollection<Rectangle> GetDistinctFactoryExpressions()
         {
-            return new Func<Rectangle>[]
+            return new FactoryExpressionCollection<Rectangle>(new Expression<Func<Rectangle>>[]
             {
-                () => new Rectangle(width: 5, height: 5),
-                () => new Rectangle(width: 5, height: 10),
-                () => new Rectangle(width: 5, height: 15),
-                () => new Rectangle(width: 10, height: 5),
-                () => new Rectangle(width: 10, height: 10),
-            };
+                () => new Rectangle(5, 5),
+                () => new Rectangle(5, 10),
+                () => new Rectangle(5, 15),
+                () => new Rectangle(10, 5),
+                () => new Rectangle(10, 10),
+            });
         }
     }
 }

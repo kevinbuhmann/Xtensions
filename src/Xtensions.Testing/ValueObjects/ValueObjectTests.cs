@@ -2,9 +2,12 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
+    using System.Reflection;
     using CSharpFunctionalExtensions;
     using Newtonsoft.Json;
     using Xunit;
+    using Xunit.Sdk;
 
     /// <summary>
     /// Provides equality, inequality, hash code, and serialization tests for value objects.
@@ -19,6 +22,10 @@
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 #pragma warning disable SA1600 // Elements should be documented
         private static readonly TValueObjectTestCases ValueObjectTestCases = new TValueObjectTestCases();
+
+        public static IEnumerable<object[]> NewExpressionData { get; } = ValueObjectTestCases.GetNewExpressions()
+            .Select(newExpression => new object[] { newExpression })
+            .ToList();
 
         public static IEnumerable<object[]> EqualPairsValueObjectData { get; } = ValueObjectTestCases.GetPermutatedEqualPairs()
             .Select(pair => pair.ToObjectArray())
@@ -35,6 +42,56 @@
 
 #pragma warning disable CA1062 // Validate arguments of public methods
 #pragma warning disable CA1707 // Identifiers should not contain underscores
+        [SkippableTheory]
+        [MemberData(nameof(NewExpressionData))]
+        public void Constructor_PopulatesProperties(NewExpression newExpression)
+        {
+            if (ValueObjectTestCases.TestConstructorPropertyAssignment == false)
+            {
+                throw new SkipException("The test cases for this value object opt out of this test.");
+            }
+
+            IReadOnlyCollection<object> parameterValues = newExpression.Arguments
+                .Select(argumentExpression => Expression.Lambda(argumentExpression).Compile().DynamicInvoke())
+                .ToList();
+
+            object instance = newExpression.Constructor.Invoke(parameterValues.ToArray());
+
+            IReadOnlyCollection<ParameterInfo> parameters = newExpression.Constructor.GetParameters();
+
+            for (int i = 0; i < parameters.Count; i++)
+            {
+                ParameterInfo parameter = parameters.ElementAt(i);
+                PropertyInfo property = typeof(TValueObject).GetProperty(
+                    name: parameter.Name,
+                    bindingAttr: BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+
+                if (property == null)
+                {
+                    throw new XunitException($"No property matches the '{parameter.Name}' constructor parameter.");
+                }
+                else
+                {
+                    object expected = parameterValues.ElementAt(i);
+                    object actual = property.GetValue(instance);
+
+                    try
+                    {
+                        Assert.Equal(expected: expected, actual: actual);
+                    }
+                    catch (XunitException)
+                    {
+                        throw new AssertActualExpectedException(
+                            expected: expected,
+                            expectedTitle: $"'{parameter.Name}' parameter value",
+                            actual: actual,
+                            actualTitle: $"'{property.Name}' property value",
+                            userMessage: $"The '{property.Name}' property was not assigned properly.");
+                    }
+                }
+            }
+        }
+
         [Theory]
         [MemberData(nameof(EqualPairsValueObjectData))]
         public void Equals_EqualObjects_ReturnsTrue(TValueObject left, TValueObject right)

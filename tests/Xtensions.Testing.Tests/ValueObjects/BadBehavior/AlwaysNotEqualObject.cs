@@ -26,7 +26,7 @@
 #pragma warning disable SA1402 // File may only contain a single type
     public class AlwaysNotEqualObjectValueObjectTestCases : ValueObjectTestCases<AlwaysNotEqualObject>
     {
-        public override IEnumerable<Func<AlwaysNotEqualObject>> GetDistinctValueFactories()
+        public override FactoryExpressionCollection<AlwaysNotEqualObject> GetDistinctFactoryExpressions()
         {
             throw new NotImplementedException();
         }
