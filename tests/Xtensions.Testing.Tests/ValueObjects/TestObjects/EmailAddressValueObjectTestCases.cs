@@ -2,19 +2,20 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq.Expressions;
     using Xtensions.Testing.ValueObjects;
 
     public class EmailAddressValueObjectTestCases : ValueObjectTestCases<EmailAddress>
     {
-        public override IEnumerable<Func<EmailAddress>> GetDistinctValueFactories()
+        public override FactoryExpressionCollection<EmailAddress> GetDistinctFactoryExpressions()
         {
-            return new Func<EmailAddress>[]
+            return new FactoryExpressionCollection<EmailAddress>(new Expression<Func<EmailAddress>>[]
             {
                 () => new EmailAddress("bob@smith.com"),
                 () => new EmailAddress("carol@smith.com"),
                 () => new EmailAddress("bob@example.com"),
                 () => new EmailAddress("carol@example.com"),
-            };
+            });
         }
 
         public override IEnumerable<ValueObjectPair<EmailAddress>> GetAdditionalEqualPairs()

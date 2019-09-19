@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
     using CSharpFunctionalExtensions;
 
     /// <summary>
@@ -12,6 +13,23 @@
     public abstract class ValueObjectTestCases<TValueObject>
         where TValueObject : ValueObject
     {
+        /// <summary>
+        /// Gets a value indicating whether the tests should assert that the constructor(s) populate properties properly.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if the tests should assert that the constructor(s) populate properties properly; otherwise, <c>false</c>.
+        /// </value>
+        public virtual bool TestConstructorPropertyAssignment { get; } = true;
+
+        /// <summary>
+        /// Gets a collecton of <see cref="NewExpression"/>.
+        /// </summary>
+        /// <returns>A collection of <see cref="NewExpression"/>.</returns>
+        public IEnumerable<NewExpression> GetNewExpressions()
+        {
+            return this.GetDistinctFactoryExpressions().Select(factoryExpression => factoryExpression.Body as NewExpression);
+        }
+
         /// <summary>
         /// Gets distinct values.
         /// </summary>
@@ -54,11 +72,11 @@
         }
 
         /// <summary>
-        /// Gets a collection of factory functions that each generate an instance <typeparamref name="TValueObject" />.
-        /// No two factories should return "equal" instances, see <see cref="GetAdditionalEqualPairs" />.
+        /// Gets a collection of factory expressions that each generate an instance <typeparamref name="TValueObject" />.
+        /// No two expressions should return "equal" instances, see <see cref="GetAdditionalEqualPairs" />.
         /// </summary>
-        /// <returns>A collection of factory functions for <typeparamref name="TValueObject" />.</returns>
-        public abstract IEnumerable<Func<TValueObject>> GetDistinctValueFactories();
+        /// <returns>A collection of factory expressions for <typeparamref name="TValueObject" />.</returns>
+        public abstract FactoryExpressionCollection<TValueObject> GetDistinctFactoryExpressions();
 
         /// <summary>
         /// Gets a collection of additional equal pairs of instances of <typeparamref name="TValueObject" />.
@@ -70,6 +88,11 @@
         public virtual IEnumerable<ValueObjectPair<TValueObject>> GetAdditionalEqualPairs()
         {
             return Enumerable.Empty<ValueObjectPair<TValueObject>>();
+        }
+
+        private IEnumerable<Func<TValueObject>> GetDistinctValueFactories()
+        {
+            return this.GetDistinctFactoryExpressions().Select(valueExpression => valueExpression.Compile());
         }
     }
 }

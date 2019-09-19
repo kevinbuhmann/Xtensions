@@ -1,11 +1,55 @@
 ﻿namespace Xtensions.Testing.Tests.ValueObjects
 {
+    using System;
+    using System.Linq.Expressions;
     using Xtensions.Testing.Tests.ValueObjects.BadBehavior;
     using Xunit;
     using Xunit.Sdk;
 
     public class ValueObjectTests_FailureTests
     {
+        [Fact]
+        public void Constructor_PopulatesProperties_Skipped()
+        {
+            Expression<Func<SkipConstructorPopulatesPropertiesObject>> factoryExpression = () => new SkipConstructorPopulatesPropertiesObject(1);
+            NewExpression newExpression = factoryExpression.Body as NewExpression;
+
+            SkipException exception = Assert.Throws<SkipException>(
+                () => new SkipConstructorPopulatesPropertiesObjectTests().Constructor_PopulatesProperties(newExpression));
+
+            Assert.Equal(
+                expected: "The test cases for this value object opt out of this test.",
+                actual: exception.Message);
+        }
+
+        [Fact]
+        public void Constructor_PopulatesProperties_PropertyDoesNotExist()
+        {
+            Expression<Func<NoPropertiesObject>> factoryExpression = () => new NoPropertiesObject(1);
+            NewExpression newExpression = factoryExpression.Body as NewExpression;
+
+            XunitException exception = Assert.ThrowsAny<XunitException>(
+                () => new NoPropertiesObjectTests().Constructor_PopulatesProperties(newExpression));
+
+            Assert.Equal(
+                expected: "No property matches the 'value' constructor parameter.",
+                actual: exception.Message);
+        }
+
+        [Fact]
+        public void Constructor_PopulatesProperties_PropertyNotAssignedProperly()
+        {
+            Expression<Func<PropertyValueIncrementedObject>> factoryExpression = () => new PropertyValueIncrementedObject(1);
+            NewExpression newExpression = factoryExpression.Body as NewExpression;
+
+            XunitException exception = Assert.ThrowsAny<XunitException>(
+                () => new PropertyValueIncrementedObjectTests().Constructor_PopulatesProperties(newExpression));
+
+            Assert.Equal(
+                expected: "The 'Value' property was not assigned properly.\r\n'value' parameter value: 1\r\n'Value' property value:  2",
+                actual: exception.Message);
+        }
+
         [Fact]
         public void Equals_EqualObjects_ReturnsTrue()
         {
