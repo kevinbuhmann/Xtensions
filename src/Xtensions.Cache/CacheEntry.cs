@@ -44,7 +44,8 @@
         /// <returns>The values to check when determining if two instances are equal.</returns>
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            return new object[] { this.Value, this.AbsoluteExpiration };
+            yield return this.Value;
+            yield return this.AbsoluteExpiration;
         }
     }
 }

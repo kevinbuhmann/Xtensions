@@ -59,7 +59,8 @@
         /// <returns>The values to check when determining if two instances are equal.</returns>
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            return this.ToObjectArray();
+            yield return this.Value1;
+            yield return this.Value2;
         }
     }
 }

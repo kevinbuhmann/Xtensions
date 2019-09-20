@@ -14,7 +14,7 @@
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            return new object[] { this.Value.ToUpperInvariant() };
+            yield return this.Value.ToUpperInvariant();
         }
     }
 }

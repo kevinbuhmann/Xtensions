@@ -21,7 +21,8 @@
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            return new object[] { this.Width, this.Height };
+            yield return this.Width;
+            yield return this.Height;
         }
     }
 }
