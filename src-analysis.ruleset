@@ -11,6 +11,8 @@
     <Rule Id="IDE0003WithoutSuggestion" Action="None" />
     <Rule Id="IDE0058" Action="None" />
     <Rule Id="IDE0058WithoutSuggestion" Action="None" />
+    <Rule Id="IDE0063" Action="None" />
+    <Rule Id="IDE0063WithoutSuggestion" Action="None" />
     <Rule Id="IDE0065" Action="None" />
     <Rule Id="IDE0065WithoutSuggestion" Action="None" />
   </Rules>
@@ -19,6 +21,8 @@
     <Rule Id="IDE0003WithoutSuggestion" Action="None" />
     <Rule Id="IDE0058" Action="None" />
     <Rule Id="IDE0058WithoutSuggestion" Action="None" />
+    <Rule Id="IDE0063" Action="None" />
+    <Rule Id="IDE0063WithoutSuggestion" Action="None" />
     <Rule Id="IDE0065" Action="None" />
     <Rule Id="IDE0065WithoutSuggestion" Action="None" />
   </Rules>
