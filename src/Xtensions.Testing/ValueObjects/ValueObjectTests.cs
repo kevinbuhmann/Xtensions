@@ -46,10 +46,9 @@
         [MemberData(nameof(NewExpressionData))]
         public void Constructor_PopulatesProperties(NewExpression newExpression)
         {
-            if (ValueObjectTestCases.TestConstructorPropertyAssignment == false)
-            {
-                throw new SkipException("The test cases for this value object opt out of this test.");
-            }
+            Skip.If(
+                condition: ValueObjectTestCases.TestConstructorPropertyAssignment == false,
+                reason: "The test cases for this value object opt out of this test.");
 
             IReadOnlyCollection<object> parameterValues = newExpression.Arguments
                 .Select(argumentExpression => Expression.Lambda(argumentExpression).Compile().DynamicInvoke())
