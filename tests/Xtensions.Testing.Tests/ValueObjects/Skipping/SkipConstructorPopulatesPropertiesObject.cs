@@ -1,4 +1,4 @@
-﻿namespace Xtensions.Testing.Tests.ValueObjects.BadBehavior
+﻿namespace Xtensions.Testing.Tests.ValueObjects.Skipping
 {
     using System;
     using System.Collections.Generic;

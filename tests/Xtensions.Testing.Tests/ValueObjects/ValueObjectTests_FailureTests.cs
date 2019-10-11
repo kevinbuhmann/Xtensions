@@ -3,6 +3,7 @@
     using System;
     using System.Linq.Expressions;
     using Xtensions.Testing.Tests.ValueObjects.BadBehavior;
+    using Xtensions.Testing.Tests.ValueObjects.Skipping;
     using Xunit;
     using Xunit.Sdk;
 
