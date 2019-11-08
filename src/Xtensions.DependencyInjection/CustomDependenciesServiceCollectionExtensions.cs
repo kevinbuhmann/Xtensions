@@ -10,7 +10,7 @@
     /// <summary>
     /// Extension methods for adding services to an <see cref="IServiceCollection"/>.
     /// </summary>
-    public static class ServiceCollectionExtensions
+    public static class CustomDependenciesServiceCollectionExtensions
     {
         /// <summary>
         /// Adds a singleton service of the type specified in TService with an implementation

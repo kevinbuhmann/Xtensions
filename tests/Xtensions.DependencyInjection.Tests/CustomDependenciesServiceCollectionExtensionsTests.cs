@@ -1,11 +1,11 @@
 ﻿namespace Xtensions.DependencyInjection.Tests
 {
     using Microsoft.Extensions.DependencyInjection;
-    using Xtensions.DependencyInjection.Tests.TestServices;
-    using Xtensions.DependencyInjection.Tests.TestServices.Abstractions;
+    using Xtensions.DependencyInjection.Tests.TestServices.CustomDependencies;
+    using Xtensions.DependencyInjection.Tests.TestServices.CustomDependencies.Abstractions;
     using Xunit;
 
-    public class ServiceCollectionExtensionsTests
+    public class CustomDependenciesServiceCollectionExtensionsTests
     {
         [Fact]
         public void AddSingletonWithCustomDependencies_DependencyServiceNotRegistered_InjectsCustomDependency()

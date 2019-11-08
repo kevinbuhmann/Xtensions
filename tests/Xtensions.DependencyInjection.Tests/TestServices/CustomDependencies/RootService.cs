@@ -1,7 +1,7 @@
-﻿namespace Xtensions.DependencyInjection.Tests.TestServices
+﻿namespace Xtensions.DependencyInjection.Tests.TestServices.CustomDependencies
 {
     using EnsureThat;
-    using Xtensions.DependencyInjection.Tests.TestServices.Abstractions;
+    using Xtensions.DependencyInjection.Tests.TestServices.CustomDependencies.Abstractions;
 
     public class RootService : IRootService
     {

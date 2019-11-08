@@ -1,4 +1,4 @@
-﻿namespace Xtensions.DependencyInjection.Tests.TestServices.Abstractions
+﻿namespace Xtensions.DependencyInjection.Tests.TestServices.CustomDependencies.Abstractions
 {
     public interface IRootService
     {
