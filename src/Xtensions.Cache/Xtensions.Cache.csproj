@@ -12,7 +12,7 @@
 
   <PropertyGroup>
     <PackageId>Xtensions.Cache</PackageId>
-    <Version>0.0.2</Version>
+    <Version>0.0.4</Version>
     <Authors>Kevin Phelps</Authors>
     <RepositoryUrl>https://github.com/kevinphelps/Xtensions</RepositoryUrl>
     <PackageProjectUrl>https://github.com/kevinphelps/Xtensions</PackageProjectUrl>
@@ -35,7 +35,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Xtensions.DependencyInjection" Version="0.0.1" />
+    <PackageReference Include="Xtensions.DependencyInjection" Version="0.0.2" />
   </ItemGroup>
 
 </Project>
