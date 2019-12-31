@@ -60,8 +60,8 @@
             {
                 IService service = serviceProvider.GetRequiredService<IService>();
 
-                Assert.IsType<CompositeCache>(service.Cache);
-                Assert.Equal(actual: (service.Cache as CompositeCache).SourceCaches, expected: sourceCaches);
+                CompositeCache compositeCache = Assert.IsType<CompositeCache>(service.Cache);
+                Assert.Equal(actual: compositeCache.SourceCaches, expected: sourceCaches);
             }
         }
 
@@ -83,8 +83,8 @@
             {
                 IService service = serviceProvider.GetRequiredService<IService>();
 
-                Assert.IsType<CompositeCache>(service.Cache);
-                Assert.Equal(actual: (service.Cache as CompositeCache).SourceCaches, expected: sourceCaches);
+                CompositeCache compositeCache = Assert.IsType<CompositeCache>(service.Cache);
+                Assert.Equal(actual: compositeCache.SourceCaches, expected: sourceCaches);
             }
         }
     }
