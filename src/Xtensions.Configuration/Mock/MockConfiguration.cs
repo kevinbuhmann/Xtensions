@@ -22,7 +22,7 @@
         /// Initializes a new instance of the <see cref="MockConfiguration"/> class.
         /// </summary>
         /// <param name="configurationData">The initial configuration data.</param>
-        public MockConfiguration(dynamic configurationData)
+        public MockConfiguration(object configurationData)
         {
             EnsureArg.IsNotNull(configurationData, nameof(configurationData));
 
@@ -88,7 +88,7 @@
         /// </summary>
         /// <param name="configurationData">The configuration data.</param>
         /// <exception cref="ObjectDisposedException">This mock configuration instance has been disposed.</exception>
-        public void SetConfigurationData(dynamic configurationData)
+        public void SetConfigurationData(object configurationData)
         {
             if (this.disposed)
             {
