@@ -50,7 +50,8 @@
                             .SetInclude($"[{moduleUnderTest}]*")
                             .SetOutput(PathConstruction.Combine(CoverageDirectory, $"{moduleUnderTest}.xml"))
                             .SetFormat(CoverletOutputFormat.opencover)
-                            .SetThreshold(this.CodeCoverageThreshold));
+                            .SetThreshold(this.CodeCoverageThreshold)
+                            .SetThresholdType(CoverletThresholdType.branch));
                     }
 
                     ReportGeneratorTasks.ReportGenerator(settings => settings

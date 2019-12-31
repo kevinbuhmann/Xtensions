@@ -33,8 +33,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Xtensions.Cache\Xtensions.Cache.csproj" />
-    <ProjectReference Include="..\..\src\Xtensions.Testing\Xtensions.Testing.csproj" />
     <ProjectReference Include="..\..\src\Xtensions.Time\Xtensions.Time.csproj" />
   </ItemGroup>
-  
+
 </Project>

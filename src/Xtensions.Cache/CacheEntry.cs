@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using CSharpFunctionalExtensions;
 
     /// <summary>
@@ -42,6 +43,7 @@
         /// Gets the values to check when determining if two instances are equal.
         /// </summary>
         /// <returns>The values to check when determining if two instances are equal.</returns>
+        [ExcludeFromCodeCoverage]
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return this.Value;
