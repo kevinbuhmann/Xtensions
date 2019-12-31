@@ -17,8 +17,6 @@
         /// <param name="sourceCaches">The source caches.</param>
         public CompositeCache(IEnumerable<ICache> sourceCaches)
         {
-            EnsureArg.IsNotNull(sourceCaches, nameof(sourceCaches));
-
             List<ICache> sourceCachesList = sourceCaches.ToList();
 
             EnsureArg.IsTrue(
@@ -93,7 +91,6 @@
             where T : class
         {
             EnsureArg.IsNotNullOrEmpty(cacheKey, nameof(cacheKey));
-            EnsureArg.IsNotNull(cacheEntry, nameof(cacheEntry));
 
             return this.SourceCaches.WriteEntry(cacheKey, cacheEntry);
         }

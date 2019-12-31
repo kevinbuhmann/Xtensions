@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <OutputPath>bin</OutputPath>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn />
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ensure.That" Version="8.1.2" />
+    <PackageReference Include="Fody" Version="6.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <ProjectReference Include="..\..\src\Xtensions.ArgumentNullGuard.Fody\Xtensions.ArgumentNullGuard.Fody.csproj" ReferenceOutputAssembly="false" />
+    <WeaverFiles Include="..\..\src\Xtensions.ArgumentNullGuard.Fody\bin\$(Configuration)\netstandard2.0\Xtensions.ArgumentNullGuard.Fody.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Xtensions.ArgumentNullGuard.Fody\Xtensions.ArgumentNullGuard.Fody.csproj" />
+  </ItemGroup>
+
+</Project>

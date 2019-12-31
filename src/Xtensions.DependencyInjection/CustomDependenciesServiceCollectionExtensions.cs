@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using EnsureThat;
     using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
@@ -28,9 +27,6 @@
             where TService : class
             where TImplementation : class, TService
         {
-            EnsureArg.IsNotNull(services, nameof(services));
-            EnsureArg.IsNotNull(customDependenciesFactory, nameof(customDependenciesFactory));
-
             return services.AddSingleton<TService, TImplementation>(GetImplementationFactory<TImplementation>(customDependenciesFactory));
         }
 

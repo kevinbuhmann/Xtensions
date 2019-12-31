@@ -21,8 +21,6 @@
         /// <param name="slidingExpiration">The sliding expiration to use for all cached values.</param>
         public MemoryCacheAdapter(IMemoryCache memoryCache, TimeSpan slidingExpiration)
         {
-            EnsureArg.IsNotNull(memoryCache, nameof(memoryCache));
-
             this.memoryCache = memoryCache;
             this.slidingExpiration = slidingExpiration;
         }
@@ -56,7 +54,6 @@
             where T : class
         {
             EnsureArg.IsNotNullOrEmpty(cacheKey, nameof(cacheKey));
-            EnsureArg.IsNotNull(cacheEntry, nameof(cacheEntry));
 
             MemoryCacheEntryOptions cacheEntryOptions = new MemoryCacheEntryOptions()
             {

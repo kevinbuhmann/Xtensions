@@ -2,7 +2,6 @@
 {
     using System;
     using System.Reflection;
-    using EnsureThat;
     using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
@@ -20,8 +19,6 @@
             where TService : class
             where TImplementation : class, TService
         {
-            EnsureArg.IsNotNull(services, nameof(services));
-
             services.AddSingleton<TService, TImplementation>();
             services.AddAllConcreteDependenciesAsSingletons(typeof(TImplementation));
         }

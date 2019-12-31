@@ -21,7 +21,6 @@
         public static async Task<T?> Read<T>(this ICache cache, string cacheKey)
             where T : class
         {
-            EnsureArg.IsNotNull(cache, nameof(cache));
             EnsureArg.IsNotNullOrEmpty(cacheKey, nameof(cacheKey));
 
             CacheEntry<T>? cacheEntry = await cache.ReadEntry<T>(cacheKey).ConfigureAwait(false);
@@ -41,7 +40,6 @@
         public static Task Write<T>(this ICache cache, string cacheKey, T value, DateTime absoluteExpiration)
             where T : class
         {
-            EnsureArg.IsNotNull(cache, nameof(cache));
             EnsureArg.IsNotNullOrEmpty(cacheKey, nameof(cacheKey));
 
             return cache.WriteEntry(cacheKey, new CacheEntry<T>(value, absoluteExpiration));
@@ -58,9 +56,7 @@
         public static Task WriteEntry<T>(this IEnumerable<ICache> caches, string cacheKey, CacheEntry<T> cacheEntry)
             where T : class
         {
-            EnsureArg.IsNotNull(caches, nameof(caches));
             EnsureArg.IsNotNullOrEmpty(cacheKey, nameof(cacheKey));
-            EnsureArg.IsNotNull(cacheEntry, nameof(cacheEntry));
 
             return Task.WhenAll(caches.Select(cache => cache.WriteEntry(cacheKey, cacheEntry)));
         }

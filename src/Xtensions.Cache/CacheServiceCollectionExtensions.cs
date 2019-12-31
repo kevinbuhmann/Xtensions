@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using EnsureThat;
     using Microsoft.Extensions.DependencyInjection;
     using Xtensions.DependencyInjection;
 
@@ -26,9 +25,6 @@
            where TService : class
            where TImplementation : class, TService
         {
-            EnsureArg.IsNotNull(services, nameof(services));
-            EnsureArg.IsNotNull(cacheFactory, nameof(cacheFactory));
-
             return services.AddSingletonWithCustomDependencies<TService, TImplementation>(serviceProvider => new object[]
             {
                 cacheFactory(serviceProvider),
@@ -51,9 +47,6 @@
            where TService : class
            where TImplementation : class, TService
         {
-            EnsureArg.IsNotNull(services, nameof(services));
-            EnsureArg.IsNotNull(cacheFactory, nameof(cacheFactory));
-
             return services.AddSingletonWithCache<TService, TImplementation>(serviceProvider => new CompositeCache(cacheFactory(serviceProvider)));
         }
     }

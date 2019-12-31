@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using EnsureThat;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Primitives;
     using Newtonsoft.Json;
@@ -24,8 +23,6 @@
         /// <param name="configurationData">The initial configuration data.</param>
         public MockConfiguration(object configurationData)
         {
-            EnsureArg.IsNotNull(configurationData, nameof(configurationData));
-
             this.tempFilePath = Path.GetTempFileName();
             this.SetConfigurationData(configurationData);
 
@@ -94,8 +91,6 @@
             {
                 throw new ObjectDisposedException("This mock configuration instance has been disposed.");
             }
-
-            EnsureArg.IsNotNull(configurationData, nameof(configurationData));
 
             File.WriteAllText(
                 path: this.tempFilePath,
