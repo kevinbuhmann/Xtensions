@@ -39,7 +39,7 @@
 
             cacheMock
                 .Setup(cache => cache.ReadEntry<string>(cacheKey))
-                .Returns(Task.FromResult<CacheEntry<string>>(null));
+                .ReturnsAsync(null as CacheEntry<string>);
 
             Assert.Null(await cacheMock.Object.Read<string>(cacheKey: cacheKey));
         }
@@ -55,7 +55,7 @@
 
             cacheMock
                 .Setup(cache => cache.ReadEntry<string>(cacheKey))
-                .Returns(Task.FromResult(new CacheEntry<string>(value, absoluteExpiration)));
+                .ReturnsAsync(new CacheEntry<string>(value, absoluteExpiration));
 
             string result = await cacheMock.Object.Read<string>(cacheKey: cacheKey);
 

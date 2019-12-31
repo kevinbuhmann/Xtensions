@@ -73,13 +73,13 @@
 
             sourceCache1Mock
                 .Setup(cache => cache.ReadEntry<string>(cacheKey))
-                .Returns(Task.FromResult<CacheEntry<string>>(null));
+                .ReturnsAsync(null as CacheEntry<string>);
 
             Mock<ICache> sourceCache2Mock = new Mock<ICache>(MockBehavior.Strict);
 
             sourceCache2Mock
                 .Setup(cache => cache.ReadEntry<string>(cacheKey))
-                .Returns(Task.FromResult<CacheEntry<string>>(null));
+                .ReturnsAsync(null as CacheEntry<string>);
 
             CompositeCache compositeCache = new CompositeCache(new ICache[] { sourceCache1Mock.Object, sourceCache2Mock.Object });
 
@@ -98,7 +98,7 @@
 
             sourceCache1Mock
                 .Setup(cache => cache.ReadEntry<string>(cacheKey))
-                .Returns(Task.FromResult(cacheEntry));
+                .ReturnsAsync(cacheEntry);
 
             Mock<ICache> sourceCache2Mock = new Mock<ICache>(MockBehavior.Strict);
 
@@ -122,13 +122,13 @@
 
             sourceCache1Mock
                 .Setup(cache => cache.ReadEntry<string>(cacheKey))
-                .Returns(Task.FromResult<CacheEntry<string>>(null));
+                .ReturnsAsync(null as CacheEntry<string>);
 
             Mock<ICache> sourceCache2Mock = new Mock<ICache>(MockBehavior.Strict);
 
             sourceCache2Mock
                 .Setup(cache => cache.ReadEntry<string>(cacheKey))
-                .Returns(Task.FromResult(cacheEntry));
+                .ReturnsAsync(cacheEntry);
 
             CompositeCache compositeCache = new CompositeCache(new ICache[] { sourceCache1Mock.Object, sourceCache2Mock.Object });
 
@@ -149,7 +149,7 @@
 
             sourceCache1Mock
                 .Setup(cache => cache.ReadEntry<string>(cacheKey))
-                .Returns(Task.FromResult<CacheEntry<string>>(null));
+                .ReturnsAsync(null as CacheEntry<string>);
 
             sourceCache1Mock
                 .Setup(cache => cache.WriteEntry(cacheKey, cacheEntry))
@@ -160,7 +160,7 @@
 
             sourceCache2Mock
                 .Setup(cache => cache.ReadEntry<string>(cacheKey))
-                .Returns(Task.FromResult(cacheEntry));
+                .ReturnsAsync(cacheEntry);
 
             CompositeCache compositeCache = new CompositeCache(new ICache[] { sourceCache1Mock.Object, sourceCache2Mock.Object });
 
