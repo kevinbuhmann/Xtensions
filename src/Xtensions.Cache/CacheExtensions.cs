@@ -18,13 +18,13 @@
         /// <param name="cache">The cache.</param>
         /// <param name="cacheKey">The cache key.</param>
         /// <returns>The cached value.</returns>
-        public static async Task<T> Read<T>(this ICache cache, string cacheKey)
+        public static async Task<T?> Read<T>(this ICache cache, string cacheKey)
             where T : class
         {
             EnsureArg.IsNotNull(cache, nameof(cache));
             EnsureArg.IsNotNullOrEmpty(cacheKey, nameof(cacheKey));
 
-            CacheEntry<T> cacheEntry = await cache.ReadEntry<T>(cacheKey).ConfigureAwait(false);
+            CacheEntry<T>? cacheEntry = await cache.ReadEntry<T>(cacheKey).ConfigureAwait(false);
 
             return cacheEntry?.Value;
         }

@@ -46,7 +46,7 @@
                 IEnumerable<object> dependencies = constructor.GetParameters()
                     .Select(parameter => GetDependency(parameter, customDependencies, serviceProvider));
 
-                return constructor.Invoke(dependencies.ToArray()) as TImplementation;
+                return (constructor.Invoke(dependencies.ToArray()) as TImplementation)!;
             };
         }
 

@@ -13,7 +13,7 @@
         /// <typeparam name="T">The type of the cached value.</typeparam>
         /// <param name="cacheKey">The cache key.</param>
         /// <returns>The <see cref="CacheEntry{T}"/> or <see langword="null"/>.</returns>
-        Task<CacheEntry<T>> ReadEntry<T>(string cacheKey)
+        Task<CacheEntry<T>?> ReadEntry<T>(string cacheKey)
             where T : class;
 
         /// <summary>

@@ -8,14 +8,6 @@
     public class CompositeCacheTests
     {
         [Fact]
-        public void Constructor_NullSourceCaches_Throws()
-        {
-            Assert.Throws<ArgumentNullException>(
-                paramName: "sourceCaches",
-                testCode: () => new CompositeCache(sourceCaches: null));
-        }
-
-        [Fact]
         public void Constructor_ZeroSourceCaches_Throws()
         {
             Assert.Throws<ArgumentException>(
@@ -50,18 +42,6 @@
             ICache sourceCache2 = new Mock<ICache>(MockBehavior.Strict).Object;
 
             Assert.NotNull(new CompositeCache(sourceCaches: new ICache[] { sourceCache1, sourceCache2 }));
-        }
-
-        [Fact]
-        public async Task ReadEntry_NullCacheKey_Throws()
-        {
-            ICache sourceCache1 = new Mock<ICache>(MockBehavior.Strict).Object;
-            ICache sourceCache2 = new Mock<ICache>(MockBehavior.Strict).Object;
-            CompositeCache compositeCache = new CompositeCache(new ICache[] { sourceCache1, sourceCache2 });
-
-            await Assert.ThrowsAsync<ArgumentNullException>(
-                paramName: "cacheKey",
-                testCode: () => compositeCache.ReadEntry<string>(cacheKey: null));
         }
 
         [Fact]
@@ -167,36 +147,6 @@
             await compositeCache.ReadEntry<string>(cacheKey);
 
             sourceCache1Mock.Verify();
-        }
-
-        [Fact]
-        public async Task WriteEntry_NullCacheKey_Throws()
-        {
-            const string value = "test-value";
-            DateTime absoluteExpiration = new DateTime(year: 2018, month: 3, day: 17, hour: 8, minute: 0, second: 0);
-            CacheEntry<string> cacheEntry = new CacheEntry<string>(value, absoluteExpiration);
-
-            ICache sourceCache1 = new Mock<ICache>(MockBehavior.Strict).Object;
-            ICache sourceCache2 = new Mock<ICache>(MockBehavior.Strict).Object;
-            CompositeCache compositeCache = new CompositeCache(new ICache[] { sourceCache1, sourceCache2 });
-
-            await Assert.ThrowsAsync<ArgumentNullException>(
-                paramName: "cacheKey",
-                testCode: () => compositeCache.WriteEntry(cacheKey: null, cacheEntry));
-        }
-
-        [Fact]
-        public async Task WriteEntry_NullCacheEntry_Throws()
-        {
-            const string cacheKey = "test-cache-key";
-
-            ICache sourceCache1 = new Mock<ICache>(MockBehavior.Strict).Object;
-            ICache sourceCache2 = new Mock<ICache>(MockBehavior.Strict).Object;
-            CompositeCache compositeCache = new CompositeCache(new ICache[] { sourceCache1, sourceCache2 });
-
-            await Assert.ThrowsAsync<ArgumentNullException>(
-                paramName: "cacheEntry",
-                testCode: () => compositeCache.WriteEntry<string>(cacheKey, cacheEntry: null));
         }
 
         [Fact]

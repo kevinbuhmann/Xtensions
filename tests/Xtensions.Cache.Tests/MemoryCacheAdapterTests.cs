@@ -10,32 +10,11 @@
     public class MemoryCacheAdapterTests
     {
         [Fact]
-        public void Constructor_NullMemoryCache_Throws()
-        {
-            Assert.Throws<ArgumentNullException>(
-                paramName: "memoryCache",
-                testCode: () => new MemoryCacheAdapter(memoryCache: null, slidingExpiration: TimeSpan.Zero));
-        }
-
-        [Fact]
         public void Constructor_GivenMemoryCache_DoesNotThrow()
         {
             using (IMemoryCache memoryCache = GetMemoryCache())
             {
                 Assert.NotNull(new MemoryCacheAdapter(memoryCache, slidingExpiration: TimeSpan.FromMinutes(1)));
-            }
-        }
-
-        [Fact]
-        public async void ReadEntry_NullCacheKey_Throws()
-        {
-            using (IMemoryCache memoryCache = GetMemoryCache())
-            {
-                MemoryCacheAdapter memoryCacheAdapter = new MemoryCacheAdapter(memoryCache, slidingExpiration: TimeSpan.FromMinutes(1));
-
-                await Assert.ThrowsAsync<ArgumentNullException>(
-                    paramName: "cacheKey",
-                    testCode: () => memoryCacheAdapter.ReadEntry<string>(cacheKey: null));
             }
         }
 
@@ -65,43 +44,11 @@
                 memoryCache.Set(cacheKey, new CacheEntry<string>(value, absoluteExpiration));
 
                 MemoryCacheAdapter memoryCacheAdapter = new MemoryCacheAdapter(memoryCache, slidingExpiration: TimeSpan.FromMinutes(1));
-                CacheEntry<string> cacheEntry = await memoryCacheAdapter.ReadEntry<string>(cacheKey);
+                CacheEntry<string>? cacheEntry = await memoryCacheAdapter.ReadEntry<string>(cacheKey);
 
                 Assert.NotNull(cacheEntry);
-                Assert.Equal(actual: cacheEntry.Value, expected: value);
-                Assert.Equal(actual: cacheEntry.AbsoluteExpiration, expected: absoluteExpiration);
-            }
-        }
-
-        [Fact]
-        public async void WriteEntry_NullCacheKey_Throws()
-        {
-            const string value = "test-value";
-            DateTime absoluteExpiration = new DateTime(year: 2018, month: 3, day: 17, hour: 8, minute: 0, second: 0);
-            CacheEntry<string> cacheEntry = new CacheEntry<string>(value, absoluteExpiration);
-
-            using (IMemoryCache memoryCache = GetMemoryCache())
-            {
-                MemoryCacheAdapter memoryCacheAdapter = new MemoryCacheAdapter(memoryCache, slidingExpiration: TimeSpan.FromMinutes(1));
-
-                await Assert.ThrowsAsync<ArgumentNullException>(
-                    paramName: "cacheKey",
-                    testCode: () => memoryCacheAdapter.WriteEntry(cacheKey: null, cacheEntry));
-            }
-        }
-
-        [Fact]
-        public async void WriteEntry_NullCacheEntry_Throws()
-        {
-            const string cacheKey = "test-cache-key";
-
-            using (IMemoryCache memoryCache = GetMemoryCache())
-            {
-                MemoryCacheAdapter memoryCacheAdapter = new MemoryCacheAdapter(memoryCache, slidingExpiration: TimeSpan.FromMinutes(1));
-
-                await Assert.ThrowsAsync<ArgumentNullException>(
-                    paramName: "cacheEntry",
-                    testCode: () => memoryCacheAdapter.WriteEntry<string>(cacheKey, cacheEntry: null));
+                Assert.Equal(actual: cacheEntry!.Value, expected: value);
+                Assert.Equal(actual: cacheEntry!.AbsoluteExpiration, expected: absoluteExpiration);
             }
         }
 

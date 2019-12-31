@@ -35,12 +35,12 @@
         /// <returns>
         /// The <see cref="CacheEntry{T}" /> or <see langword="null" />.
         /// </returns>
-        public Task<CacheEntry<T>> ReadEntry<T>(string cacheKey)
+        public Task<CacheEntry<T>?> ReadEntry<T>(string cacheKey)
             where T : class
         {
             EnsureArg.IsNotNullOrEmpty(cacheKey, nameof(cacheKey));
 
-            return Task.FromResult(this.memoryCache.Get<CacheEntry<T>>(cacheKey));
+            return Task.FromResult(this.memoryCache.Get<CacheEntry<T>?>(cacheKey));
         }
 
         /// <summary>

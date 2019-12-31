@@ -50,12 +50,12 @@
         /// <returns>
         /// The <see cref="CacheEntry{T}" /> or <see langword="null" />.
         /// </returns>
-        public async Task<CacheEntry<T>> ReadEntry<T>(string cacheKey)
+        public async Task<CacheEntry<T>?> ReadEntry<T>(string cacheKey)
             where T : class
         {
             EnsureArg.IsNotNullOrEmpty(cacheKey, nameof(cacheKey));
 
-            CacheEntry<T> cacheEntry = null;
+            CacheEntry<T>? cacheEntry = null;
             List<ICache> missedCaches = new List<ICache>();
 
             foreach (ICache cache in this.SourceCaches)

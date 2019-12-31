@@ -1,6 +1,5 @@
 ﻿namespace Xtensions.DependencyInjection.Tests
 {
-    using System;
     using Microsoft.Extensions.DependencyInjection;
     using Xtensions.DependencyInjection.Tests.TestServices.AllConcreteDependencies;
     using Xtensions.DependencyInjection.Tests.TestServices.AllConcreteDependencies.Clients;
@@ -8,16 +7,6 @@
 
     public class AllConcreteDependenciesServiceCollectionExtensionsTests
     {
-        [Fact]
-        public void AddSingletonIncludingAllConcreteDependencies_NullServices_Throws()
-        {
-            IServiceCollection services = null;
-
-            Assert.Throws<ArgumentNullException>(
-                paramName: "services",
-                testCode: () => services.AddSingletonIncludingAllConcreteDependencies<IService, Service>());
-        }
-
         [Fact]
         public void AddSingletonIncludingAllConcreteDependencies_RegistersAllConcreteDependencies()
         {
