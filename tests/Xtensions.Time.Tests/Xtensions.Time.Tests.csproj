@@ -31,5 +31,5 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Xtensions.Time\Xtensions.Time.csproj" />
   </ItemGroup>
-  
+
 </Project>
