@@ -19,14 +19,6 @@
             return element.CustomAttributes.Any(attribute => generatedCodeAttributeNames.Contains(attribute.AttributeType.Name));
         }
 
-        public static bool TryGetAttribute(this MethodDefinition method, string name, out CustomAttribute attribute)
-        {
-            attribute = method.CustomAttributes
-                .SingleOrDefault(customAttribute => customAttribute.AttributeType.Name == name);
-
-            return attribute != default;
-        }
-
         public static bool ShouldInjectNullCheck(this ParameterDefinition parameter, MethodDefinition method)
         {
             return parameter.IsOut == false

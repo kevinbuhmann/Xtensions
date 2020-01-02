@@ -13,7 +13,7 @@
 
   <PropertyGroup>
     <PackageId>Xtensions.ArgumentNullGuard.Fody</PackageId>
-    <Version>0.0.2</Version>
+    <Version>0.0.4</Version>
     <Authors>Kevin Phelps</Authors>
     <RepositoryUrl>https://github.com/kevinphelps/Xtensions</RepositoryUrl>
     <PackageProjectUrl>https://github.com/kevinphelps/Xtensions</PackageProjectUrl>

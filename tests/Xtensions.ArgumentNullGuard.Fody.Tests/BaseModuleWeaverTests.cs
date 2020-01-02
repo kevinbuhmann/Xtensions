@@ -30,16 +30,7 @@
         {
             try
             {
-                object? result = method.Invoke(obj: target, parameters: parameters.ToArray());
-
-                if (result is Task task)
-                {
-                    task.GetAwaiter().GetResult();
-                }
-                else if (result is IEnumerable enumerable)
-                {
-                    enumerable.GetEnumerator().MoveNext();
-                }
+                method.Invoke(obj: target, parameters: parameters.ToArray());
             }
             catch (TargetInvocationException targetInvocationException)
             {

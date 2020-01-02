@@ -1,7 +1,6 @@
 ﻿namespace Xtensions.ArgumentNullGuard.Fody.Extensions
 {
     using System.Collections.Generic;
-    using System.Linq;
     using Mono.Collections.Generic;
 
     internal static class MonoCollectionExtensions
@@ -22,14 +21,6 @@
             {
                 self.Insert(index, item);
                 index++;
-            }
-        }
-
-        public static void Insert<T>(this Collection<T> self, int index, IEnumerable<T> items)
-        {
-            foreach (T item in items.Reverse())
-            {
-                self.Insert(index, item);
             }
         }
     }

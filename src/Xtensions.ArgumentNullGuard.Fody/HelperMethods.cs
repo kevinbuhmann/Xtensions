@@ -35,14 +35,6 @@
             yield return Instruction.Create(OpCodes.Call, this.GetEnsureNotNullMethod());
         }
 
-        public IEnumerable<Instruction> GetInstructionsToCallEnsureNotNull(FieldReference field)
-        {
-            yield return Instruction.Create(OpCodes.Ldarg_0); // load 'this'
-            yield return Instruction.Create(OpCodes.Ldfld, field);
-            yield return Instruction.Create(OpCodes.Ldstr, field.Name);
-            yield return Instruction.Create(OpCodes.Call, this.GetEnsureNotNullMethod());
-        }
-
         private MethodDefinition GetEnsureNotNullMethod()
         {
             if (this.ensureNotNullMethod == null)

@@ -1,4 +1,4 @@
-﻿namespace Xtensions.ArgumentNullGuard.Fody.MethodProcessors
+﻿namespace Xtensions.ArgumentNullGuard.Fody
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -7,11 +7,11 @@
     using Mono.Cecil.Rocks;
     using Xtensions.ArgumentNullGuard.Fody.Extensions;
 
-    internal class NormalMethodProcessor
+    internal class MethodProcessor
     {
         private readonly HelperMethods helperMethods;
 
-        public NormalMethodProcessor(HelperMethods helperMethods)
+        public MethodProcessor(HelperMethods helperMethods)
         {
             this.helperMethods = helperMethods;
         }

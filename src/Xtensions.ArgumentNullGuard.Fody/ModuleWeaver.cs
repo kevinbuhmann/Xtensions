@@ -2,11 +2,9 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Runtime.CompilerServices;
     using global::Fody;
     using Mono.Cecil;
     using Xtensions.ArgumentNullGuard.Fody.Extensions;
-    using Xtensions.ArgumentNullGuard.Fody.MethodProcessors;
 
     public class ModuleWeaver : BaseModuleWeaver
     {
@@ -14,9 +12,7 @@
         {
             LibraryMethods libraryMethods = new LibraryMethods(this.ModuleDefinition);
             HelperMethods helperMethods = new HelperMethods(this.ModuleDefinition, libraryMethods);
-            AsyncMethodProcessor asyncMethodProcessor = new AsyncMethodProcessor(helperMethods);
-            IteratorMethodProcessor iteratorMethodProcessor = new IteratorMethodProcessor(helperMethods);
-            NormalMethodProcessor normalMethodProcessor = new NormalMethodProcessor(helperMethods);
+            MethodProcessor methodProcessor = new MethodProcessor(helperMethods);
 
             IEnumerable<MethodDefinition> methodsToProcess = this.ModuleDefinition.GetTypes()
                 .ToList() // prevent processing dynamically added types
@@ -26,18 +22,7 @@
 
             foreach (MethodDefinition method in methodsToProcess)
             {
-                if (method.TryGetAttribute(name: nameof(AsyncStateMachineAttribute), out CustomAttribute asyncStateMachineAttribute))
-                {
-                    asyncMethodProcessor.ProcessMethod(method, asyncStateMachineAttribute);
-                }
-                else if (method.TryGetAttribute(name: nameof(IteratorStateMachineAttribute), out CustomAttribute iteratorStateMachineAttribute))
-                {
-                    iteratorMethodProcessor.ProcessMethod(method, iteratorStateMachineAttribute);
-                }
-                else
-                {
-                    normalMethodProcessor.ProcessMethod(method);
-                }
+                methodProcessor.ProcessMethod(method);
             }
         }
 
