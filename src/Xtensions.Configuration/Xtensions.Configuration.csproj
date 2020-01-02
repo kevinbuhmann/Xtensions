@@ -19,6 +19,7 @@
     <PackageProjectUrl>https://github.com/kevinphelps/Xtensions</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>Provides a mock configuration implementation for tests.</Description>
+    <PackageOutputPath>$(SolutionDir)\artifacts</PackageOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
