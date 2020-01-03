@@ -10,7 +10,7 @@
         private const string NullableContextAttributeName = "NullableContextAttribute";
         private const byte AnnotatedNullableFlag = 2;
 
-        public static bool IsNullableReferenceTypeParameter(this ParameterDefinition parameter, MethodDefinition method)
+        public static bool? IsNullableReferenceTypeParameter(this ParameterDefinition parameter, MethodDefinition method)
         {
             bool? annotatedNullable = IsAnnotatedNullable(
                 element: parameter,
@@ -19,7 +19,7 @@
             return annotatedNullable ?? IsNullableContext(method);
         }
 
-        private static bool IsNullableContext(MethodDefinition method)
+        private static bool? IsNullableContext(MethodDefinition method)
         {
             bool? annotatedNullable = IsAnnotatedNullable(
                 element: method,
@@ -28,13 +28,13 @@
             return annotatedNullable ?? IsNullableContext(method.DeclaringType);
         }
 
-        private static bool IsNullableContext(TypeDefinition type)
+        private static bool? IsNullableContext(TypeDefinition type)
         {
             bool? annotatedNullable = IsAnnotatedNullable(
                 element: type,
                 attributeName: NullableContextAttributeName);
 
-            return annotatedNullable ?? IsNullableContext(type.DeclaringType);
+            return annotatedNullable ?? (type.DeclaringType == null ? null : IsNullableContext(type.DeclaringType));
         }
 
         private static bool? IsAnnotatedNullable(ICustomAttributeProvider element, string attributeName)
