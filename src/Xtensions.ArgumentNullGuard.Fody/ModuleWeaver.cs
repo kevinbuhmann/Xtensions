@@ -10,7 +10,7 @@
     {
         public override void Execute()
         {
-            LibraryMethods libraryMethods = new LibraryMethods(this.ModuleDefinition);
+            LibraryMethods libraryMethods = new LibraryMethods(this);
             HelperMethods helperMethods = new HelperMethods(this.ModuleDefinition, libraryMethods);
             MethodProcessor methodProcessor = new MethodProcessor(helperMethods);
 

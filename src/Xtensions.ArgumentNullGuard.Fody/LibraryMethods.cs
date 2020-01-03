@@ -1,29 +1,34 @@
 ﻿namespace Xtensions.ArgumentNullGuard.Fody
 {
     using System;
+    using System.Linq;
+    using global::Fody;
     using Mono.Cecil;
-    using Reflection = System.Reflection;
 
     internal class LibraryMethods
     {
-        private readonly ModuleDefinition moduleDefinition;
+        private readonly BaseModuleWeaver weaver;
 
         private MethodReference? argumentNullExceptionWithMessageConstructor;
         private MethodReference? concatThreeStringsMethod;
 
-        public LibraryMethods(ModuleDefinition moduleDefinition)
+        public LibraryMethods(BaseModuleWeaver weaver)
         {
-            this.moduleDefinition = moduleDefinition;
+            this.weaver = weaver;
         }
 
         public MethodReference GetArgumentNullExceptionWithMessageConstructor()
         {
             if (this.argumentNullExceptionWithMessageConstructor == null)
             {
-                Reflection.ConstructorInfo argumentNullExceptionWithMessageConstructor = typeof(ArgumentNullException).GetConstructor(
-                    types: new[] { typeof(string), typeof(string) });
+                TypeDefinition argumentNullExceptionType = this.weaver.FindType(nameof(ArgumentNullException));
+                MethodDefinition argumentNullExceptionWithMessageConstructor = argumentNullExceptionType.Methods.Single(method =>
+                    method.IsConstructor
+                    && method.Parameters.Count == 2
+                    && method.Parameters[0].ParameterType.Name == nameof(String)
+                    && method.Parameters[1].ParameterType.Name == nameof(String));
 
-                this.argumentNullExceptionWithMessageConstructor = this.moduleDefinition.ImportReference(argumentNullExceptionWithMessageConstructor);
+                this.argumentNullExceptionWithMessageConstructor = this.weaver.ModuleDefinition.ImportReference(argumentNullExceptionWithMessageConstructor);
             }
 
             return this.argumentNullExceptionWithMessageConstructor;
@@ -33,11 +38,16 @@
         {
             if (this.concatThreeStringsMethod == null)
             {
-                Reflection.MethodInfo concatThreeStringsMethod = typeof(string).GetMethod(
-                    name: "Concat",
-                    types: new[] { typeof(string), typeof(string), typeof(string) });
+                TypeDefinition stringType = this.weaver.FindType(nameof(String));
+                MethodDefinition concatThreeStringsMethod = stringType.Methods.Single(method =>
+                    method.Name == nameof(string.Concat)
+                    && method.IsStatic
+                    && method.Parameters.Count == 3
+                    && method.Parameters[0].ParameterType.Name == nameof(String)
+                    && method.Parameters[1].ParameterType.Name == nameof(String)
+                    && method.Parameters[2].ParameterType.Name == nameof(String));
 
-                this.concatThreeStringsMethod = this.moduleDefinition.ImportReference(concatThreeStringsMethod);
+                this.concatThreeStringsMethod = this.weaver.ModuleDefinition.ImportReference(concatThreeStringsMethod);
             }
 
             return this.concatThreeStringsMethod;
