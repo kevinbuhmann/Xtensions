@@ -10,13 +10,13 @@
         [Theory]
         [OptimizationLevelData("System.CodeDom.Compiler.GeneratedCodeAttribute(null, null)")]
         [OptimizationLevelData("System.Runtime.CompilerServices.CompilerGeneratedAttribute")]
-        public void DoesNotThrowArgumentNullExceptionForNotNullableParameterWhenClassIsGenerated(OptimizationLevel optimizationLevel, string attribute)
+        public void DoesNotThrowArgumentNullExceptionForNonNullableParameterWhenClassIsGenerated(OptimizationLevel optimizationLevel, string attribute)
         {
             string sourceCode = @$"
                 [{attribute}]
                 public static class Target
                 {{
-                    public static void TestMethod(string? value)
+                    public static void TestMethod(string value)
                     {{
                     }}
                 }}";
@@ -30,13 +30,13 @@
         [Theory]
         [OptimizationLevelData("System.CodeDom.Compiler.GeneratedCodeAttribute(null, null)")]
         [OptimizationLevelData("System.Runtime.CompilerServices.CompilerGeneratedAttribute")]
-        public void DoesNotThrowArgumentNullExceptionForNotNullableParameterWhenMethodIsGenerated(OptimizationLevel optimizationLevel, string attribute)
+        public void DoesNotThrowArgumentNullExceptionForNonNullableParameterWhenMethodIsGenerated(OptimizationLevel optimizationLevel, string attribute)
         {
             string sourceCode = @$"
                 public static class Target
                 {{
                     [{attribute}]
-                    public static void TestMethod(string? value)
+                    public static void TestMethod(string value)
                     {{
                     }}
                 }}";
