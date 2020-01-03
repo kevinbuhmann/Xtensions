@@ -13,7 +13,7 @@
 
   <PropertyGroup>
     <PackageId>Xtensions.DependencyInjection</PackageId>
-    <Version>0.0.4</Version>
+    <Version>0.0.5</Version>
     <Authors>Kevin Phelps</Authors>
     <RepositoryUrl>https://github.com/kevinphelps/Xtensions</RepositoryUrl>
     <PackageProjectUrl>https://github.com/kevinphelps/Xtensions</PackageProjectUrl>
@@ -26,7 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ensure.That" Version="8.1.2" />
     <PackageReference Include="Fody" Version="6.0.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
