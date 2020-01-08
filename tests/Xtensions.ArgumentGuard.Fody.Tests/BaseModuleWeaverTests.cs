@@ -91,6 +91,7 @@
                 MetadataReference.CreateFromFile(typeof(Task).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(System.CodeDom.Compiler.GeneratedCodeAttribute).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(System.Runtime.AssemblyTargetedPatchBandAttribute).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof(Helpers.Enums.Shape).Assembly.Location),
             };
 
             string assemblyPath = Path.GetTempFileName();

@@ -42,10 +42,37 @@
             }
         }
 
+        public static bool IsEnumType(this TypeReference type, out TypeReference enumType, out bool nullable)
+        {
+            if (type is GenericInstanceType genericInstanceType)
+            {
+                nullable = type.FullName.StartsWith(typeof(Nullable<>).FullName, StringComparison.Ordinal);
+                enumType = nullable ? genericInstanceType.GenericArguments.Single() : type;
+            }
+            else
+            {
+                nullable = false;
+                enumType = type;
+            }
+
+            if (enumType is ByReferenceType byReferenceType)
+            {
+                return byReferenceType.ElementType.IsEnumType(out enumType, out nullable);
+            }
+            else if (enumType is GenericParameter genericParameter)
+            {
+                return genericParameter.HasEnumConstraint();
+            }
+            else
+            {
+                return enumType.Resolve().IsEnum;
+            }
+        }
+
         private static bool HasEnumConstraint(this GenericParameter genericParameter)
         {
             return genericParameter.HasConstraints
-                && genericParameter.Constraints.All(constraint => constraint.ConstraintType.FullName == typeof(Enum).FullName);
+                && genericParameter.Constraints.Any(constraint => constraint.ConstraintType.FullName == typeof(Enum).FullName);
         }
     }
 }

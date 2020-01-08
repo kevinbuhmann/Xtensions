@@ -13,7 +13,11 @@
         {
             HelperMethods helperMethods = new HelperMethods(
                 moduleDefinition: this.ModuleDefinition,
+                enumReferences: new EnumReferences(this),
                 exceptionReferences: new ExceptionReferences(this),
+                nullableReferences: new NullableReferences(this),
+                objectReferences: new ObjectReferences(this),
+                reflectionReferences: new ReflectionReferences(this),
                 stringReferences: new StringReferences(this));
             MethodProcessor methodProcessor = new MethodProcessor(helperMethods);
 
