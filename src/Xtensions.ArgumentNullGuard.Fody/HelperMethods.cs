@@ -39,7 +39,7 @@
         {
             if (this.ensureNotNullMethod == null)
             {
-                this.ensureNotNullMethod = new MethodDefinition(
+                MethodDefinition method = new MethodDefinition(
                     name: "EnsureNotNull",
                     attributes: MethodAttributes.Public | MethodAttributes.Static,
                     returnType: this.moduleDefinition.TypeSystem.Void);
@@ -54,12 +54,12 @@
                     attributes: ParameterAttributes.None,
                     parameterType: this.moduleDefinition.TypeSystem.String);
 
-                this.ensureNotNullMethod.Parameters.Add(valueParameter);
-                this.ensureNotNullMethod.Parameters.Add(parameterNameParameter);
+                method.Parameters.Add(valueParameter);
+                method.Parameters.Add(parameterNameParameter);
 
                 Instruction returnInstruction = Instruction.Create(OpCodes.Ret);
 
-                IReadOnlyCollection<Instruction> instructions = new[]
+                method.Body.Instructions.AddRange(new[]
                 {
                     Instruction.Create(OpCodes.Ldarg, valueParameter),
                     Instruction.Create(OpCodes.Ldnull),
@@ -75,12 +75,12 @@
                     Instruction.Create(OpCodes.Throw),
 
                     returnInstruction,
-                };
+                });
 
-                this.ensureNotNullMethod.Body.Instructions.AddRange(instructions);
-                this.ensureNotNullMethod.Body.OptimizeMacros();
+                method.Body.OptimizeMacros();
 
-                this.GetArgumentNullGuardHelpersType().Methods.Add(this.ensureNotNullMethod);
+                this.GetArgumentNullGuardHelpersType().Methods.Add(method);
+                this.ensureNotNullMethod = method;
             }
 
             return this.ensureNotNullMethod;
@@ -90,13 +90,14 @@
         {
             if (this.argumentNullGuardHelpersType == null)
             {
-                this.argumentNullGuardHelpersType = new TypeDefinition(
+                TypeDefinition type = new TypeDefinition(
                     @namespace: "Xtensions.ArgumentNullGuard",
                     name: ClassName,
                     attributes: TypeAttributes.Class | TypeAttributes.Sealed | TypeAttributes.Abstract | TypeAttributes.BeforeFieldInit,
                     baseType: this.moduleDefinition.TypeSystem.Object);
 
-                this.moduleDefinition.Types.Add(this.argumentNullGuardHelpersType);
+                this.moduleDefinition.Types.Add(type);
+                this.argumentNullGuardHelpersType = type;
             }
 
             return this.argumentNullGuardHelpersType;
