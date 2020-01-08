@@ -1,6 +1,5 @@
 ﻿namespace Xtensions.ArgumentNullGuard.Fody
 {
-    using System.Collections.Generic;
     using Mono.Cecil;
     using Mono.Cecil.Cil;
     using Mono.Cecil.Rocks;
@@ -22,20 +21,7 @@
             this.libraryMethods = libraryMethods;
         }
 
-        public IEnumerable<Instruction> GetInstructionsToCallEnsureNotNull(ParameterDefinition parameter)
-        {
-            yield return Instruction.Create(OpCodes.Ldarg, parameter);
-
-            if (parameter.ParameterType.IsByReference)
-            {
-                yield return Instruction.Create(OpCodes.Ldind_Ref);
-            }
-
-            yield return Instruction.Create(OpCodes.Ldstr, parameter.Name);
-            yield return Instruction.Create(OpCodes.Call, this.GetEnsureNotNullMethod());
-        }
-
-        private MethodDefinition GetEnsureNotNullMethod()
+        public MethodDefinition GetEnsureNotNullMethod()
         {
             if (this.ensureNotNullMethod == null)
             {

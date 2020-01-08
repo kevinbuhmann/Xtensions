@@ -19,14 +19,7 @@
             return element.CustomAttributes.Any(attribute => generatedCodeAttributeNames.Contains(attribute.AttributeType.Name));
         }
 
-        public static bool ShouldInjectNullCheck(this ParameterDefinition parameter, MethodDefinition method)
-        {
-            return parameter.IsOut == false
-                && parameter.ParameterType.IsReferenceType()
-                && parameter.IsNullableReferenceTypeParameter(method) == false;
-        }
-
-        private static bool IsReferenceType(this TypeReference type)
+        public static bool IsReferenceType(this TypeReference type)
         {
             if (type.IsValueType)
             {
