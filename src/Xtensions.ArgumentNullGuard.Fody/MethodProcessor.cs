@@ -23,9 +23,12 @@
                 .SelectMany(parameter => this.helperMethods.GetInstructionsToCallEnsureNotNull(parameter))
                 .ToList();
 
-            method.Body.SimplifyMacros();
-            method.Body.Instructions.Prepend(guardInstructions);
-            method.Body.OptimizeMacros();
+            if (guardInstructions.Any())
+            {
+                method.Body.SimplifyMacros();
+                method.Body.Instructions.Prepend(guardInstructions);
+                method.Body.OptimizeMacros();
+            }
         }
     }
 }
