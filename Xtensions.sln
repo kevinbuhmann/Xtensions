@@ -31,11 +31,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xtensions.Cache", "src\Xten
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xtensions.Cache.Tests", "tests\Xtensions.Cache.Tests\Xtensions.Cache.Tests.csproj", "{C8AE6D3B-E06A-4D4A-AD0C-51C97DB353F5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xtensions.ArgumentNullGuard.Fody", "src\Xtensions.ArgumentNullGuard.Fody\Xtensions.ArgumentNullGuard.Fody.csproj", "{288630D6-CDA0-48BB-BE62-9253757312C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xtensions.ArgumentGuard.Fody", "src\Xtensions.ArgumentGuard.Fody\Xtensions.ArgumentGuard.Fody.csproj", "{288630D6-CDA0-48BB-BE62-9253757312C3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xtensions.ArgumentNullGuard.Fody.Tests", "tests\Xtensions.ArgumentNullGuard.Fody.Tests\Xtensions.ArgumentNullGuard.Fody.Tests.csproj", "{DF86C5DD-6327-423B-B80D-C56F50873E16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xtensions.ArgumentGuard.Fody.Tests", "tests\Xtensions.ArgumentGuard.Fody.Tests\Xtensions.ArgumentGuard.Fody.Tests.csproj", "{DF86C5DD-6327-423B-B80D-C56F50873E16}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xtensions.ArgumentNullGuard", "src\Xtensions.ArgumentNullGuard\Xtensions.ArgumentNullGuard.csproj", "{85AC738D-E16B-40C7-BD3E-5229845186BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xtensions.ArgumentGuard", "src\Xtensions.ArgumentGuard\Xtensions.ArgumentGuard.csproj", "{85AC738D-E16B-40C7-BD3E-5229845186BC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{288630D6-CDA0-48BB-BE62-9253757312C3} = {288630D6-CDA0-48BB-BE62-9253757312C3}
 	EndProjectSection
