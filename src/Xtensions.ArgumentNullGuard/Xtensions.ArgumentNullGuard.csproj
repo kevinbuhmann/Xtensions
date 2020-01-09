@@ -18,7 +18,7 @@
     <RepositoryUrl>https://github.com/kevinphelps/Xtensions</RepositoryUrl>
     <PackageProjectUrl>https://github.com/kevinphelps/Xtensions</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageOutputPath>$(SolutionDir)\artifacts</PackageOutputPath>
+    <PackageOutputPath>$(SolutionDir)artifacts</PackageOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
