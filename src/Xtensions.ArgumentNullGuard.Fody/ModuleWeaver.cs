@@ -10,8 +10,9 @@
     {
         public override void Execute()
         {
-            LibraryMethods libraryMethods = new LibraryMethods(this);
-            HelperMethods helperMethods = new HelperMethods(this.ModuleDefinition, libraryMethods);
+            HelperMethods helperMethods = new HelperMethods(
+                moduleDefinition: this.ModuleDefinition,
+                libraryMethods: new LibraryMethods(this));
             MethodProcessor methodProcessor = new MethodProcessor(helperMethods);
 
             IEnumerable<MethodDefinition> methodsToProcess = this.ModuleDefinition.GetTypes()
