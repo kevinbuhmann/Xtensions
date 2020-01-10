@@ -21,12 +21,12 @@
         {
             if (this.argumentNullExceptionWithMessageConstructor == null)
             {
-                TypeDefinition argumentNullExceptionType = this.weaver.FindType(nameof(ArgumentNullException));
+                TypeDefinition argumentNullExceptionType = this.weaver.FindType(typeof(ArgumentNullException).FullName);
                 MethodDefinition argumentNullExceptionWithMessageConstructor = argumentNullExceptionType.Methods.Single(method =>
                     method.IsConstructor
                     && method.Parameters.Count == 2
-                    && method.Parameters[0].ParameterType.Name == nameof(String)
-                    && method.Parameters[1].ParameterType.Name == nameof(String));
+                    && method.Parameters[0].ParameterType.FullName == typeof(string).FullName
+                    && method.Parameters[1].ParameterType.FullName == typeof(string).FullName);
 
                 this.argumentNullExceptionWithMessageConstructor = this.weaver.ModuleDefinition.ImportReference(argumentNullExceptionWithMessageConstructor);
             }
@@ -38,14 +38,14 @@
         {
             if (this.concatThreeStringsMethod == null)
             {
-                TypeDefinition stringType = this.weaver.FindType(nameof(String));
+                TypeDefinition stringType = this.weaver.FindType(typeof(string).FullName);
                 MethodDefinition concatThreeStringsMethod = stringType.Methods.Single(method =>
                     method.Name == nameof(string.Concat)
                     && method.IsStatic
                     && method.Parameters.Count == 3
-                    && method.Parameters[0].ParameterType.Name == nameof(String)
-                    && method.Parameters[1].ParameterType.Name == nameof(String)
-                    && method.Parameters[2].ParameterType.Name == nameof(String));
+                    && method.Parameters[0].ParameterType.FullName == typeof(string).FullName
+                    && method.Parameters[1].ParameterType.FullName == typeof(string).FullName
+                    && method.Parameters[2].ParameterType.FullName == typeof(string).FullName);
 
                 this.concatThreeStringsMethod = this.weaver.ModuleDefinition.ImportReference(concatThreeStringsMethod);
             }

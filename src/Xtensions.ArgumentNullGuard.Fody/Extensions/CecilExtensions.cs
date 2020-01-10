@@ -1,5 +1,6 @@
 ﻿namespace Xtensions.ArgumentNullGuard.Fody.Extensions
 {
+    using System;
     using System.CodeDom.Compiler;
     using System.Collections.Generic;
     using System.Linq;
@@ -12,11 +13,11 @@
         {
             IReadOnlyCollection<string> generatedCodeAttributeNames = new[]
             {
-                nameof(GeneratedCodeAttribute),
-                nameof(CompilerGeneratedAttribute),
+                typeof(GeneratedCodeAttribute).FullName,
+                typeof(CompilerGeneratedAttribute).FullName,
             };
 
-            return element.CustomAttributes.Any(attribute => generatedCodeAttributeNames.Contains(attribute.AttributeType.Name));
+            return element.CustomAttributes.Any(attribute => generatedCodeAttributeNames.Contains(attribute.AttributeType.FullName));
         }
 
         public static bool IsReferenceType(this TypeReference type)
@@ -44,7 +45,7 @@
         private static bool HasEnumConstraint(this GenericParameter genericParameter)
         {
             return genericParameter.HasConstraints
-                && genericParameter.Constraints.All(constraint => constraint.ConstraintType.FullName == "System.Enum");
+                && genericParameter.Constraints.All(constraint => constraint.ConstraintType.FullName == typeof(Enum).FullName);
         }
     }
 }
