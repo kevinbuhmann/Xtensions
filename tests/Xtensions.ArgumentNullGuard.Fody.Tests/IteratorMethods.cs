@@ -33,29 +33,6 @@
 
         [Theory]
         [OptimizationLevelData]
-        public void ThrowsArgumentNullExceptionForUnusedNonNullableParameter(OptimizationLevel optimizationLevel)
-        {
-            string sourceCode = @"
-                using System.Collections.Generic;
-
-                public static class Target
-                {
-                    public static IEnumerable<string> TestMethod(string value)
-                    {
-                        yield return ""static-value"";
-                    }
-                }";
-
-            Assembly assembly = this.WeaveAssembly(sourceCode, optimizationLevel);
-            MethodInfo testMethod = assembly.GetType("Target")!.GetMethod("TestMethod")!;
-
-            Assert.Throws<ArgumentNullException>(
-                paramName: "value",
-                testCode: () => InvokeMethod(method: testMethod, parameters: new object?[] { null }));
-        }
-
-        [Theory]
-        [OptimizationLevelData]
         public void DoesNotThrowArgumentNullExceptionForNotNullableParameterWhenNonNullValueIsPassed(OptimizationLevel optimizationLevel)
         {
             string sourceCode = @"

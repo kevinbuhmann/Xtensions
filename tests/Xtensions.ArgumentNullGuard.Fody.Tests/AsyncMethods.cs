@@ -34,29 +34,6 @@
 
         [Theory]
         [OptimizationLevelData]
-        public void ThrowsArgumentNullExceptionForUnUnsedNonNullableParameter(OptimizationLevel optimizationLevel)
-        {
-            string sourceCode = @"
-                using System.Threading.Tasks;
-
-                public static class Target
-                {
-                    public static async Task TestMethod(string value)
-                    {
-                        await Task.Delay(0);
-                    }
-                }";
-
-            Assembly assembly = this.WeaveAssembly(sourceCode, optimizationLevel);
-            MethodInfo testMethod = assembly.GetType("Target")!.GetMethod("TestMethod")!;
-
-            Assert.Throws<ArgumentNullException>(
-                paramName: "value",
-                testCode: () => InvokeMethod(method: testMethod, parameters: new object?[] { null }));
-        }
-
-        [Theory]
-        [OptimizationLevelData]
         public void DoesNotThrowArgumentNullExceptionForNotNullableParameterWhenNonNullValueIsPassed(OptimizationLevel optimizationLevel)
         {
             string sourceCode = @"
