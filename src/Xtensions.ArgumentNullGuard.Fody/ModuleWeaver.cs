@@ -5,6 +5,7 @@
     using global::Fody;
     using Mono.Cecil;
     using Xtensions.ArgumentNullGuard.Fody.Extensions;
+    using Xtensions.ArgumentNullGuard.Fody.LibraryReferences;
 
     public class ModuleWeaver : BaseModuleWeaver
     {
@@ -12,7 +13,8 @@
         {
             HelperMethods helperMethods = new HelperMethods(
                 moduleDefinition: this.ModuleDefinition,
-                libraryMethods: new LibraryMethods(this));
+                exceptionReferences: new ExceptionReferences(this),
+                stringReferences: new StringReferences(this));
             MethodProcessor methodProcessor = new MethodProcessor(helperMethods);
 
             IEnumerable<MethodDefinition> methodsToProcess = this.ModuleDefinition.GetTypes()

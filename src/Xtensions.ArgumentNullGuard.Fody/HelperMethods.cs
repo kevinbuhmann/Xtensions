@@ -4,21 +4,24 @@
     using Mono.Cecil.Cil;
     using Mono.Cecil.Rocks;
     using Xtensions.ArgumentNullGuard.Fody.Extensions;
+    using Xtensions.ArgumentNullGuard.Fody.LibraryReferences;
 
     internal class HelperMethods
     {
         internal const string ClassName = "ArgumentNullGuardHelpers";
 
         private readonly ModuleDefinition moduleDefinition;
-        private readonly LibraryMethods libraryMethods;
+        private readonly ExceptionReferences exceptionReferences;
+        private readonly StringReferences stringReferences;
 
         private TypeDefinition? argumentNullGuardHelpersType;
         private MethodDefinition? ensureNotNullMethod;
 
-        public HelperMethods(ModuleDefinition moduleDefinition, LibraryMethods libraryMethods)
+        public HelperMethods(ModuleDefinition moduleDefinition, ExceptionReferences exceptionReferences, StringReferences stringReferences)
         {
             this.moduleDefinition = moduleDefinition;
-            this.libraryMethods = libraryMethods;
+            this.exceptionReferences = exceptionReferences;
+            this.stringReferences = stringReferences;
         }
 
         public MethodDefinition GetEnsureNotNullMethod()
@@ -56,8 +59,8 @@
                     Instruction.Create(OpCodes.Ldstr, "Parameter '"),
                     Instruction.Create(OpCodes.Ldarg, parameterNameParameter),
                     Instruction.Create(OpCodes.Ldstr, "' is null."),
-                    Instruction.Create(OpCodes.Call, this.libraryMethods.GetConcatThreeStringsMethod()),
-                    Instruction.Create(OpCodes.Newobj, this.libraryMethods.GetArgumentNullExceptionWithMessageConstructor()),
+                    Instruction.Create(OpCodes.Call, this.stringReferences.ConcatThreeStringsMethod.Value),
+                    Instruction.Create(OpCodes.Newobj, this.exceptionReferences.ArgumentNullExceptionWithMessageConstructor.Value),
                     Instruction.Create(OpCodes.Throw),
 
                     returnInstruction,
