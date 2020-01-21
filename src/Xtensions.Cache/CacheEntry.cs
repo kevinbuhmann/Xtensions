@@ -46,8 +46,11 @@
         [ExcludeFromCodeCoverage]
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            yield return this.Value;
-            yield return this.AbsoluteExpiration;
+            return new object[]
+            {
+                this.Value,
+                this.AbsoluteExpiration,
+            };
         }
     }
 }
