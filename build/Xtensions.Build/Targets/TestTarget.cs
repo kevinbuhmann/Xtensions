@@ -7,9 +7,11 @@
     using EnsureThat;
     using Nuke.Common;
     using Nuke.Common.IO;
+    using Nuke.Common.Tooling;
     using Nuke.Common.Tools.Coverlet;
     using Nuke.Common.Tools.ReportGenerator;
     using Xtensions.Build.NukeExtensions;
+    using Xtensions.Build.Tools;
 
     public class TestTarget : BaseTarget
     {
@@ -54,6 +56,7 @@
                     }
 
                     ReportGeneratorTasks.ReportGenerator(settings => settings
+                        .SetToolPath(ToolPaths.Instance.ReportGeneratorPath)
                         .SetReports($@"{CoverageDirectory}/*.xml")
                         .SetReportTypes(ReportTypes.Html)
                         .SetTargetDirectory(CoverageReportDirectory));
