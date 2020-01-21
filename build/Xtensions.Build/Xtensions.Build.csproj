@@ -17,9 +17,9 @@
     <PackageReference Include="coverlet.console" Version="1.5.1">
       <ExcludeAssets>all</ExcludeAssets>
     </PackageReference>
-    <PackageReference Include="Ensure.That" Version="8.1.1" />
-    <PackageReference Include="Nuke.Common" Version="0.21.2" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.4">
+    <PackageReference Include="Ensure.That" Version="8.1.2" />
+    <PackageReference Include="Nuke.Common" Version="0.23.6" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
