@@ -30,7 +30,7 @@
 
         [Theory]
         [OptimizationLevelData]
-        public void DoesNotThrowArgumentNullExceptionForNotNullableParameterWhenNonNullValueIsPassed(OptimizationLevel optimizationLevel)
+        public void DoesNotThrowArgumentNullExceptionForNonNullableParameterWhenNonNullValueIsPassed(OptimizationLevel optimizationLevel)
         {
             string sourceCode = @"
                 public static class Target
