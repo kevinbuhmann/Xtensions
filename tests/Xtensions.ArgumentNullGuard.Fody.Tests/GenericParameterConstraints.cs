@@ -93,10 +93,12 @@
         public void DoesNotThrowArgumentNullExceptionForNonNullableGenericParameterWithOnlyEnumConstraint(OptimizationLevel optimizationLevel)
         {
             string sourceCode = @"
+                using System;
+
                 public static class Target
                 {
                     public static void TestMethod<T>(T value)
-                        where T : System.Enum
+                        where T : Enum
                     {
                     }
                 }";
@@ -113,10 +115,12 @@
         public void DoesNotThrowArgumentNullExceptionForNonNullableGenericParameterWithValueTypeAndEnumConstraints(OptimizationLevel optimizationLevel)
         {
             string sourceCode = @"
+                using System;
+
                 public static class Target
                 {
                     public static void TestMethod<T>(T value)
-                        where T : struct, System.Enum
+                        where T : struct, Enum
                     {
                     }
                 }";
@@ -133,10 +137,12 @@
         public void DoesNotThrowArgumentNullExceptionForNullableGenericParameterWithValueTypeAndEnumConstraints(OptimizationLevel optimizationLevel)
         {
             string sourceCode = @"
+                using System;
+
                 public static class Target
                 {
                     public static void TestMethod<T>(T? value)
-                        where T : struct, System.Enum
+                        where T : struct, Enum
                     {
                     }
                 }";
