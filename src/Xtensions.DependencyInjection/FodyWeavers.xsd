@@ -4,7 +4,7 @@
   <xs:element name="Weavers">
     <xs:complexType>
       <xs:all>
-        <xs:element name="Xtensions.ArgumentNullGuard" minOccurs="0" maxOccurs="1" type="xs:anyType" />
+        <xs:element name="Xtensions.ArgumentGuard" minOccurs="0" maxOccurs="1" type="xs:anyType" />
       </xs:all>
       <xs:attribute name="VerifyAssembly" type="xs:boolean">
         <xs:annotation>

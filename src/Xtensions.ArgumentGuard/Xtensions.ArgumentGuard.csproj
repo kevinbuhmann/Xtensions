@@ -13,7 +13,7 @@
 
   <PropertyGroup>
     <PackageId>Xtensions.ArgumentGuard.Fody</PackageId>
-    <Version>0.0.0</Version>
+    <Version>0.0.1</Version>
     <Authors>Kevin Phelps</Authors>
     <RepositoryUrl>https://github.com/kevinphelps/Xtensions</RepositoryUrl>
     <PackageProjectUrl>https://github.com/kevinphelps/Xtensions</PackageProjectUrl>
