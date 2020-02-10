@@ -10,10 +10,11 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\Xtensions.ArgumentGuard\AllowEmptyAttribute.cs" />
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
 

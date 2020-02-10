@@ -69,6 +69,11 @@
             }
         }
 
+        public static bool HasCustomAttribute(this ICustomAttributeProvider element, Type attributeType)
+        {
+            return element.CustomAttributes.Any(attribute => attribute.AttributeType.FullName == attributeType.FullName);
+        }
+
         private static bool HasEnumConstraint(this GenericParameter genericParameter)
         {
             return genericParameter.HasConstraints

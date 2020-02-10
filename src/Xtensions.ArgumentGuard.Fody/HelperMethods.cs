@@ -20,6 +20,7 @@
 
         private TypeDefinition? argumentGuardHelpersType;
         private MethodDefinition? ensureNotNullMethod;
+        private MethodDefinition? ensureNotEmptyMethod;
         private MethodDefinition? ensureValidEnumValueMethod;
         private MethodDefinition? ensureNullOrValidEnumValueMethod;
 
@@ -90,6 +91,57 @@
             }
 
             return this.ensureNotNullMethod;
+        }
+
+        public MethodDefinition GetEnsureNotEmptyMethod()
+        {
+            if (this.ensureNotEmptyMethod == null)
+            {
+                MethodDefinition method = new MethodDefinition(
+                    name: "EnsureNotEmpty",
+                    attributes: MethodAttributes.Public | MethodAttributes.Static,
+                    returnType: this.moduleDefinition.TypeSystem.Void);
+
+                ParameterDefinition valueParameter = new ParameterDefinition(
+                    name: "value",
+                    attributes: ParameterAttributes.None,
+                    parameterType: this.moduleDefinition.TypeSystem.String);
+
+                ParameterDefinition parameterNameParameter = new ParameterDefinition(
+                    name: "parameterName",
+                    attributes: ParameterAttributes.None,
+                    parameterType: this.moduleDefinition.TypeSystem.String);
+
+                method.Parameters.Add(valueParameter);
+                method.Parameters.Add(parameterNameParameter);
+
+                Instruction returnInstruction = Instruction.Create(OpCodes.Ret);
+
+                method.Body.Instructions.AddRange(new[]
+                {
+                    Instruction.Create(OpCodes.Ldarg, valueParameter),
+                    Instruction.Create(OpCodes.Ldstr, string.Empty),
+                    Instruction.Create(OpCodes.Ceq),
+                    Instruction.Create(OpCodes.Brfalse, returnInstruction),
+
+                    Instruction.Create(OpCodes.Ldstr, "Parameter '"),
+                    Instruction.Create(OpCodes.Ldarg, parameterNameParameter),
+                    Instruction.Create(OpCodes.Ldstr, "' is empty."),
+                    Instruction.Create(OpCodes.Call, this.stringReferences.ConcatThreeStringsMethod.Value),
+                    Instruction.Create(OpCodes.Ldarg, parameterNameParameter),
+                    Instruction.Create(OpCodes.Newobj, this.exceptionReferences.ArgumentExceptionWithMessageConstructor.Value),
+                    Instruction.Create(OpCodes.Throw),
+
+                    returnInstruction,
+                });
+
+                method.Body.OptimizeMacros();
+
+                this.GetArgumentGuardHelpersType().Methods.Add(method);
+                this.ensureNotEmptyMethod = method;
+            }
+
+            return this.ensureNotEmptyMethod;
         }
 
         public MethodReference GetEnumGuardMethod(TypeReference enumType, bool nullable)

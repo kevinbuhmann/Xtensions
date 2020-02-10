@@ -1,6 +1,5 @@
 ﻿namespace Xtensions.ArgumentGuard.Fody
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Mono.Cecil;
@@ -19,6 +18,8 @@
 
         public void ProcessMethod(MethodDefinition method)
         {
+            MetadataHelpers.ValidateMetadata(method);
+
             IReadOnlyCollection<Instruction> guardInstructions = method.Parameters
                 .SelectMany(parameter => this.GetGuardInstructions(parameter, method))
                 .ToList();
@@ -36,6 +37,13 @@
             return parameter.IsOut == false
                 && parameter.ParameterType.IsReferenceType()
                 && parameter.IsNullableReferenceTypeParameter(method) == false;
+        }
+
+        private static bool ShouldInjectEmptyStringGuard(ParameterDefinition parameter)
+        {
+            return parameter.IsOut == false
+                && parameter.ParameterType.FullName == typeof(string).FullName
+                && parameter.HasCustomAttribute(typeof(AllowEmptyAttribute)) == false;
         }
 
         private static bool ShouldInjectEnumGuard(ParameterDefinition parameter, out TypeReference enumType, out bool nullable)
@@ -64,15 +72,26 @@
         {
             if (ShouldInjectNullGuard(parameter, method))
             {
-                return this.GetNullGuardInstructions(parameter);
+                foreach (Instruction instruction in this.GetNullGuardInstructions(parameter))
+                {
+                    yield return instruction;
+                }
             }
-            else if (ShouldInjectEnumGuard(parameter, out TypeReference enumType, out bool nullable))
+
+            if (ShouldInjectEmptyStringGuard(parameter))
             {
-                return this.GetEnumGuardInstructions(parameter, enumType, nullable);
+                foreach (Instruction instruction in this.GetEmptyStringGuardInstructions(parameter))
+                {
+                    yield return instruction;
+                }
             }
-            else
+
+            if (ShouldInjectEnumGuard(parameter, out TypeReference enumType, out bool nullable))
             {
-                return Array.Empty<Instruction>();
+                foreach (Instruction instruction in this.GetEnumGuardInstructions(parameter, enumType, nullable))
+                {
+                    yield return instruction;
+                }
             }
         }
 
@@ -81,6 +100,13 @@
             return GetInstructionsToCallGuardMethod(
                 parameter: parameter,
                 guardMethod: this.helperMethods.GetEnsureNotNullMethod());
+        }
+
+        private IEnumerable<Instruction> GetEmptyStringGuardInstructions(ParameterDefinition parameter)
+        {
+            return GetInstructionsToCallGuardMethod(
+                parameter: parameter,
+                guardMethod: this.helperMethods.GetEnsureNotEmptyMethod());
         }
 
         private IEnumerable<Instruction> GetEnumGuardInstructions(ParameterDefinition parameter, TypeReference enumType, bool nullable)
