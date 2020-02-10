@@ -18,7 +18,8 @@
 
         public void ProcessMethod(MethodDefinition method)
         {
-            MetadataHelpers.ValidateMetadata(method);
+            ValidationHelpers.ValidateMetadata(method);
+            ValidationHelpers.ValidateEnumConstraints(method);
 
             IReadOnlyCollection<Instruction> guardInstructions = method.Parameters
                 .SelectMany(parameter => this.GetGuardInstructions(parameter, method))

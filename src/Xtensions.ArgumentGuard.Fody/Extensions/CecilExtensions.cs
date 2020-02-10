@@ -32,9 +32,7 @@
             }
             else if (type is GenericParameter genericParameter)
             {
-                return genericParameter.HasEnumConstraint()
-                    ? false
-                    : genericParameter.HasNotNullableValueTypeConstraint == false;
+                return genericParameter.HasNotNullableValueTypeConstraint == false;
             }
             else
             {
@@ -65,7 +63,7 @@
             }
             else
             {
-                return enumType.Resolve().IsEnum;
+                return enumType.IsValueType && enumType.Resolve().IsEnum;
             }
         }
 
@@ -74,7 +72,7 @@
             return element.CustomAttributes.Any(attribute => attribute.AttributeType.FullName == attributeType.FullName);
         }
 
-        private static bool HasEnumConstraint(this GenericParameter genericParameter)
+        public static bool HasEnumConstraint(this GenericParameter genericParameter)
         {
             return genericParameter.HasConstraints
                 && genericParameter.Constraints.Any(constraint => constraint.ConstraintType.FullName == typeof(Enum).FullName);

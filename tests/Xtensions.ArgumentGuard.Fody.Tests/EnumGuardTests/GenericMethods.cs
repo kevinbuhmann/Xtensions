@@ -19,7 +19,7 @@
                 public static class Target
                 {
                     public static void TestMethod<T>(T value)
-                        where T : Enum
+                        where T : struct, Enum
                     {
                     }
                 }";
@@ -73,7 +73,7 @@
                 public static class Target
                 {
                     public static void TestMethod<T>(T value)
-                        where T : Enum
+                        where T : struct, Enum
                     {
                     }
                 }";
