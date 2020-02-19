@@ -7,11 +7,8 @@
     using EnsureThat;
     using Nuke.Common;
     using Nuke.Common.IO;
-    using Nuke.Common.Tooling;
-    using Nuke.Common.Tools.Coverlet;
-    using Nuke.Common.Tools.ReportGenerator;
+    using Nuke.Common.Tools.DotNet;
     using Xtensions.Build.NukeExtensions;
-    using Xtensions.Build.Tools;
 
     public class TestTarget : BaseTarget
     {
@@ -32,6 +29,7 @@
                 .Executes(() =>
                 {
                     FileSystemTasks.EnsureCleanDirectory(CoverageDirectory);
+                    DotNetTasks.DotNet(arguments: "tool restore");
 
                     IEnumerable<string> testProjectFiles = PathConstruction.GlobFiles(
                         directory: BuildTargets.Paths.TestsDirectory,
@@ -45,21 +43,28 @@
                         string testAssemblyFile = PathConstruction.GlobFiles(testProjectFileInfo.Directory.FullName, testAssemblyFilePattern).Single();
                         string project = testProjectFileInfo.Name.Replace(".Tests.csproj", string.Empty, StringComparison.InvariantCulture);
 
-                        CoverletTasks.Coverlet(settings => settings
-                            .SetAssembly(testAssemblyFile)
-                            .SetTarget("dotnet")
-                            .SetTargetArgs($"test -c {Program.Targets.Configuration} {testProjectFile} --no-build")
-                            .SetInclude($"[{project}]*")
-                            .SetOutput(PathConstruction.Combine(CoverageDirectory, $"{project}.xml"))
-                            .SetFormat(CoverletOutputFormat.opencover)
-                            .SetThreshold(this.CodeCoverageThreshold));
+                        IReadOnlyCollection<string> coverletArguments = new[]
+                        {
+                            testAssemblyFile,
+                            "--target dotnet",
+                            $"--targetargs \"test -c {Program.Targets.Configuration} {testProjectFile} --no-build\"",
+                            $"--include [{project}]*",
+                            $"--threshold {this.CodeCoverageThreshold}",
+                            $"--output {PathConstruction.Combine(CoverageDirectory, $"{project}.xml")}",
+                            "--format opencover",
+                        };
+
+                        DotNetTasks.DotNet(arguments: $"tool run coverlet {string.Join(separator: " ", coverletArguments)}");
                     }
 
-                    ReportGeneratorTasks.ReportGenerator(settings => settings
-                        .SetToolPath(ToolPaths.Instance.ReportGeneratorPath)
-                        .SetReports($@"{CoverageDirectory}/*.xml")
-                        .SetReportTypes(ReportTypes.Html)
-                        .SetTargetDirectory(CoverageReportDirectory));
+                    IReadOnlyCollection<string> reportGeneratorArguments = new[]
+                    {
+                        $"--reports:{CoverageDirectory}/*.xml",
+                        $"--targetdir:{CoverageReportDirectory}",
+                        "--reporttypes:Html",
+                    };
+
+                    DotNetTasks.DotNet(arguments: $"tool run reportgenerator {string.Join(separator: " ", reportGeneratorArguments)}");
                 });
         }
     }
