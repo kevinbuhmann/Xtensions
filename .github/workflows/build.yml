@@ -9,12 +9,41 @@ on:
     - master
 
 jobs:
-  build:
+  # Windows
+  windows-build:
+    name: ${{matrix.os}} (${{matrix.dotnet_architecture}} dotnet)
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [windows-latest]
+        dotnet_architecture: [x86, x64]
+      fail-fast: false
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Install dotnet
+      shell: pwsh
+      run: ./.github/workflows/install-dotnet.ps1 -Architecture ${{matrix.dotnet_architecture}}
+
+    - name: Build
+      shell: pwsh
+      run: ./build.ps1
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: ${{matrix.os}}-dotnet-${{matrix.dotnet_architecture}}-artifacts
+        path: ./artifacts
+
+  # Non-Windows
+  non-windows-build:
     name: ${{matrix.os}}
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest, macOS-latest]
+        os: [ubuntu-latest, macOS-latest]
       fail-fast: false
 
     steps:
