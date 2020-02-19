@@ -8,7 +8,7 @@ $ErrorActionPreference = "Stop"
 . ".\.build\helper-functions.ps1"
 
 $configuration = "Release"
-$artifactsPath = "$PSScriptRoot\artifacts"
+$artifactsPath = Normalize-Path("$PSScriptRoot\artifacts")
 
 Execute-Step "Clean artifacts" {
   if (Test-Path $artifactsPath) {
@@ -27,8 +27,8 @@ Execute-Step "Build" {
 foreach ($testProjectFile in Get-ChildItem -Path .\tests\**\*.Tests.csproj) {
   $testProject = $testProjectFile.Name.Replace(".csproj", "")
   $projectUnderTest = $testProject.Replace(".Tests", "")
-  $testAssemblyPath = "$($testProjectFile.Directory.FullName)\bin\$configuration\netcoreapp3.1\$testProject.dll"
-  $outputPath = "$artifactsPath\coverage\$testProject.xml"
+  $testAssemblyPath = Normalize-Path("$($testProjectFile.Directory.FullName)\bin\$configuration\netcoreapp3.1\$testProject.dll")
+  $outputPath = Normalize-Path("$artifactsPath\coverage\$testProject.xml")
 
   Execute-Step "Test $projectUnderTest" {
     $coverletArgs = $testAssemblyPath,
@@ -44,8 +44,11 @@ foreach ($testProjectFile in Get-ChildItem -Path .\tests\**\*.Tests.csproj) {
 }
 
 Execute-Step "Generate code coverage report" {
-  $reportGeneratorArgs = "--reports:$artifactsPath\coverage\*.xml",
-                         "--targetdir:$artifactsPath\coverage\report",
+  $reports = Normalize-Path("$artifactsPath\coverage\*.xml")
+  $reportPath = Normalize-Path("$artifactsPath\coverage\report")
+
+  $reportGeneratorArgs = "--reports:$reports",
+                         "--targetdir:$reportPath",
                          "--reporttypes:html"
 
   Invoke-Dotnet "tool run reportgenerator $($reportGeneratorArgs -Join ' ')"
