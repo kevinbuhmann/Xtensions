@@ -39,18 +39,18 @@
 
                     foreach (string testProjectFile in testProjectFiles)
                     {
-                        FileInfo fileInfo = new FileInfo(testProjectFile);
-                        string assemblyFileName = fileInfo.Name.Replace(".csproj", ".dll", StringComparison.InvariantCulture);
+                        FileInfo testProjectFileInfo = new FileInfo(testProjectFile);
+                        string assemblyFileName = testProjectFileInfo.Name.Replace(".csproj", ".dll", StringComparison.InvariantCulture);
                         string testAssemblyFilePattern = $@"bin/{Program.Targets.Configuration}/**/{assemblyFileName}";
-                        string testAssemblyFile = PathConstruction.GlobFiles(fileInfo.Directory.FullName, testAssemblyFilePattern).Single();
-                        string moduleUnderTest = fileInfo.Name.Replace(".Tests.csproj", string.Empty, StringComparison.InvariantCulture);
+                        string testAssemblyFile = PathConstruction.GlobFiles(testProjectFileInfo.Directory.FullName, testAssemblyFilePattern).Single();
+                        string project = testProjectFileInfo.Name.Replace(".Tests.csproj", string.Empty, StringComparison.InvariantCulture);
 
                         CoverletTasks.Coverlet(settings => settings
                             .SetAssembly(testAssemblyFile)
                             .SetTarget("dotnet")
                             .SetTargetArgs($"test -c {Program.Targets.Configuration} {testProjectFile} --no-build")
-                            .SetInclude($"[{moduleUnderTest}]*")
-                            .SetOutput(PathConstruction.Combine(CoverageDirectory, $"{moduleUnderTest}.xml"))
+                            .SetInclude($"[{project}]*")
+                            .SetOutput(PathConstruction.Combine(CoverageDirectory, $"{project}.xml"))
                             .SetFormat(CoverletOutputFormat.opencover)
                             .SetThreshold(this.CodeCoverageThreshold));
                     }
