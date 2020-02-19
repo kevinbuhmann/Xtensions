@@ -28,3 +28,7 @@ function Invoke-Dotnet($dotnetArgs) {
   Write-Host "> dotnet $dotnetArgs" -ForegroundColor DarkGray
   Safe-Execute-Command { Invoke-Expression "dotnet $dotnetArgs" }
 }
+
+function Normalize-Path($path) {
+  return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($path);
+}
