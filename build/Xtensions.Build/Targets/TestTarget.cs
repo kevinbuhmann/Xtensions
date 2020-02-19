@@ -35,36 +35,41 @@
                         directory: BuildTargets.Paths.TestsDirectory,
                         patterns: $@"**/*.Tests.csproj");
 
-                    foreach (string testProjectFile in testProjectFiles)
+                    try
                     {
-                        FileInfo testProjectFileInfo = new FileInfo(testProjectFile);
-                        string assemblyFileName = testProjectFileInfo.Name.Replace(".csproj", ".dll", StringComparison.InvariantCulture);
-                        string testAssemblyFilePattern = $@"bin/{Program.Targets.Configuration}/**/{assemblyFileName}";
-                        string testAssemblyFile = PathConstruction.GlobFiles(testProjectFileInfo.Directory.FullName, testAssemblyFilePattern).Single();
-                        string project = testProjectFileInfo.Name.Replace(".Tests.csproj", string.Empty, StringComparison.InvariantCulture);
-
-                        IReadOnlyCollection<string> coverletArguments = new[]
+                        foreach (string testProjectFile in testProjectFiles)
                         {
-                            testAssemblyFile,
-                            "--target dotnet",
-                            $"--targetargs \"test -c {Program.Targets.Configuration} {testProjectFile} --no-build\"",
-                            $"--include [{project}]*",
-                            $"--threshold {this.CodeCoverageThreshold}",
-                            $"--output {PathConstruction.Combine(CoverageDirectory, $"{project}.xml")}",
-                            "--format opencover",
+                            FileInfo testProjectFileInfo = new FileInfo(testProjectFile);
+                            string assemblyFileName = testProjectFileInfo.Name.Replace(".csproj", ".dll", StringComparison.InvariantCulture);
+                            string testAssemblyFilePattern = $@"bin/{Program.Targets.Configuration}/**/{assemblyFileName}";
+                            string testAssemblyFile = PathConstruction.GlobFiles(testProjectFileInfo.Directory.FullName, testAssemblyFilePattern).Single();
+                            string project = testProjectFileInfo.Name.Replace(".Tests.csproj", string.Empty, StringComparison.InvariantCulture);
+
+                            IReadOnlyCollection<string> coverletArguments = new[]
+                            {
+                                testAssemblyFile,
+                                "--target dotnet",
+                                $"--targetargs \"test -c {Program.Targets.Configuration} {testProjectFile} --no-build\"",
+                                $"--include [{project}]*",
+                                $"--threshold {this.CodeCoverageThreshold}",
+                                $"--output {PathConstruction.Combine(CoverageDirectory, $"{project}.xml")}",
+                                "--format opencover",
+                            };
+
+                            DotNetTasks.DotNet(arguments: $"tool run coverlet {string.Join(separator: " ", coverletArguments)}");
+                        }
+                    }
+                    finally
+                    {
+                        IReadOnlyCollection<string> reportGeneratorArguments = new[]
+                        {
+                            $"--reports:{CoverageDirectory}/*.xml",
+                            $"--targetdir:{CoverageReportDirectory}",
+                            "--reporttypes:Html",
                         };
 
-                        DotNetTasks.DotNet(arguments: $"tool run coverlet {string.Join(separator: " ", coverletArguments)}");
+                        DotNetTasks.DotNet(arguments: $"tool run reportgenerator {string.Join(separator: " ", reportGeneratorArguments)}");
                     }
-
-                    IReadOnlyCollection<string> reportGeneratorArguments = new[]
-                    {
-                        $"--reports:{CoverageDirectory}/*.xml",
-                        $"--targetdir:{CoverageReportDirectory}",
-                        "--reporttypes:Html",
-                    };
-
-                    DotNetTasks.DotNet(arguments: $"tool run reportgenerator {string.Join(separator: " ", reportGeneratorArguments)}");
                 });
         }
     }
