@@ -3,9 +3,11 @@
     using System;
     using System.CodeDom.Compiler;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Runtime.CompilerServices;
     using Mono.Cecil;
+    using Mono.Cecil.Rocks;
 
     internal static class CecilExtensions
     {
@@ -76,6 +78,29 @@
         {
             return genericParameter.HasConstraints
                 && genericParameter.Constraints.Any(constraint => constraint.ConstraintType.FullName == typeof(Enum).FullName);
+        }
+
+        [ExcludeFromCodeCoverage] // not called with parameters or generic parameters
+        public static MethodReference MakeDeclaringTypeGeneric(this MethodReference method, params TypeReference[] genericArguments)
+        {
+            MethodReference genericMethod = new MethodReference(method.Name, method.ReturnType, method.DeclaringType.MakeGenericInstanceType(genericArguments))
+            {
+                HasThis = method.HasThis,
+                ExplicitThis = method.ExplicitThis,
+                CallingConvention = method.CallingConvention,
+            };
+
+            foreach (ParameterDefinition parameter in method.Parameters)
+            {
+                genericMethod.Parameters.Add(new ParameterDefinition(parameter.ParameterType));
+            }
+
+            foreach (GenericParameter genericParameter in method.GenericParameters)
+            {
+                genericMethod.GenericParameters.Add(new GenericParameter(genericParameter.Name, genericMethod));
+            }
+
+            return genericMethod;
         }
     }
 }
