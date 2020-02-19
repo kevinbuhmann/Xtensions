@@ -199,10 +199,9 @@
                 {
                     method.Body.Instructions.AddRange(new[]
                     {
-                        Instruction.Create(OpCodes.Ldarg, valueParameter),
-                        Instruction.Create(OpCodes.Ldnull),
-                        Instruction.Create(OpCodes.Ceq),
-                        Instruction.Create(OpCodes.Brtrue, returnInstruction),
+                        Instruction.Create(OpCodes.Ldarga, valueParameter),
+                        Instruction.Create(OpCodes.Call, this.nullableReferences.HasValueGetMethod.Value.MakeDeclaringTypeGeneric(enumTypeParameter)),
+                        Instruction.Create(OpCodes.Brfalse, returnInstruction),
                     });
                 }
 
