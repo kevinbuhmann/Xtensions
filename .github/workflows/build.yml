@@ -23,7 +23,7 @@ jobs:
 
     - name: Build
       shell: pwsh
-      run: ./build.ps1 test
+      run: ./build.ps1
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v1
