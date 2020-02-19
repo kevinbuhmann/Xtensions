@@ -1,0 +1,26 @@
+name: Build Pull Request
+
+on:
+  pull_request
+
+jobs:
+  build:
+    name: Build on ${{matrix.os}}
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macOS-latest]
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Build
+      shell: pwsh
+      run: ./build.ps1 test
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: ${{matrix.os}}-artifacts
+        path: ./artifacts
